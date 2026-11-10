@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -27,12 +26,9 @@
         min-height: 100vh;
     }
 
-    /* ZĂPADĂ */
     #snow { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
-
     .wrap { position: relative; z-index: 2; }
 
-    /* TOPBAR + NAV */
     .topbar {
         position: sticky; top: 0; z-index: 50;
         background: rgba(5, 13, 26, 0.88);
@@ -67,7 +63,6 @@
     .cart-icon-btn:hover { transform: scale(1.06); }
     .cart-badge { background: #fff; color: #0b2545; padding: 1px 8px; border-radius: 50%; font-size: 0.85rem; }
 
-    /* HERO */
     .hero { margin: 10px auto 10px; max-width: 900px; }
     .hero-flake { font-size: 4rem; display: inline-block; filter: drop-shadow(0 0 20px var(--accent)); animation: floatFlake 3s ease-in-out infinite; }
     .hero-flake.r { animation-delay: 1.5s; }
@@ -85,7 +80,6 @@
     .info-box h2 { color: var(--ice); margin-top: 0; text-align: center; text-shadow: 0 0 10px var(--glow); }
     .info-box b { color: var(--ice); }
 
-    /* IP */
     .server-ip-box {
         display: inline-flex; align-items: center; gap: 12px;
         background: linear-gradient(135deg, var(--card1), var(--card2));
@@ -101,7 +95,6 @@
         50% { box-shadow: 0 0 35px rgba(56,182,255,0.95); }
     }
 
-    /* FEATURES */
     .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 900px; margin: 0 auto 25px; }
     .feature {
         background: linear-gradient(135deg, var(--card1), var(--card2));
@@ -113,7 +106,6 @@
     .feature b { color: var(--ice); display: block; margin-bottom: 6px; }
     .feature span { font-size: 0.9rem; color: #cfe6f7; }
 
-    /* ULTIMA CUMPĂRĂTURĂ (pulsează) */
     .latest {
         max-width: 700px; margin: 0 auto 25px;
         background: linear-gradient(135deg, #0f3b63, #0a2038);
@@ -128,7 +120,6 @@
         50% { transform: scale(1.025); box-shadow: 0 0 40px rgba(127,216,255,1); }
     }
 
-    /* TOP */
     .top-box { max-width: 700px; margin: 0 auto 30px; background: linear-gradient(135deg, var(--card1), var(--card2)); border: 2px solid var(--accent); border-radius: 16px; padding: 20px; box-shadow: 0 0 20px var(--glow); }
     .top-box h2 { margin: 0 0 15px; color: var(--ice); text-shadow: 0 0 10px var(--glow); }
     .top-row { display: flex; align-items: center; justify-content: space-between; background: #07121f; border: 1px solid var(--accent); border-radius: 10px; padding: 10px 16px; margin-bottom: 8px; transition: 0.2s; }
@@ -136,13 +127,12 @@
     .top-row .pos { font-size: 1.4rem; width: 40px; text-align: left; }
     .top-row .nm { flex: 1; text-align: left; font-weight: bold; }
     .top-row .amt { color: #7dffb0; font-weight: bold; }
-    .top-row:nth-child(2) { border-color: #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.4); }
+    .top-row:nth-child(1) { border-color: #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.4); }
 
     .recent-list { max-width: 700px; margin: 0 auto 30px; }
     .recent-item { background: #07121f; border: 1px solid #1d5d8c; border-radius: 10px; padding: 8px 14px; margin-bottom: 6px; display: flex; justify-content: space-between; font-size: 0.92rem; }
     .recent-item span:last-child { color: var(--ice); }
 
-    /* PAGINI */
     .page-section { display: none; margin-top: 10px; }
     .section-title { color: var(--ice); font-size: 2rem; margin-bottom: 30px; text-shadow: 0 0 10px var(--glow); }
     .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; padding: 10px; }
@@ -157,7 +147,7 @@
     .item-name { font-size: 1.4rem; font-weight: bold; color: #ffd700; margin-bottom: 15px; }
     .item-desc { font-size: 0.95rem; color: #d4e8f7; line-height: 1.6; margin-bottom: 20px; min-height: 45px; }
     .item-price { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
-    .empty-note { color: #7fa6c4; font-size: 1.05rem; padding: 40px 0; }
+    .empty-note { color: #7fa6c4; font-size: 1rem; padding: 14px 0; }
 
     .tag-input-box { width: 80%; padding: 8px 12px; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; text-align: center; font-size: 1rem; margin-bottom: 15px; outline: none; }
     .tag-input-box:focus { box-shadow: 0 0 8px var(--glow); }
@@ -167,7 +157,6 @@
     .cart-add-btn { background: linear-gradient(135deg, #12324f, #1b4f7a); border: 1px solid var(--accent); color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
     .buy-btn:hover, .cart-add-btn:hover { transform: scale(1.06); box-shadow: 0 0 15px var(--glow); }
 
-    /* MODAL */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
     .modal-content { background: linear-gradient(135deg, #0d2038, #07121f); border: 2px solid var(--accent); border-radius: 20px; padding: 25px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 0 30px var(--glow); position: relative; max-height: 90vh; overflow-y: auto; }
     .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: var(--ice2); cursor: pointer; background: none; border: none; }
@@ -230,7 +219,7 @@
             <h2>Bun venit pe WinterSMP ❄️</h2>
             <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Aici începi de la zero: strângi resurse, îți construiești baza, îți faci o echipă și lupți pentru a deveni cel mai puternic jucător de pe server.</p>
             <p>Comunitatea noastră este formată din playeri care colaborează, se întrec și creează împreună bătălii epice, baze impresionante și amintiri de neuitat. Serverul este mereu activ, cu evenimente, update-uri și surprize de sezon.</p>
-            <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>keys, shards, spawnere și tag-uri</b> cu care ești mereu cu un pas înaintea celorlalți. Mulțumim că faci parte din familia WinterSMP! 💙</p>
+            <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere și tag-uri</b> cu care ești mereu cu un pas înaintea celorlalți. Mulțumim că faci parte din familia WinterSMP! 💙</p>
         </div>
 
         <div class="features">
@@ -265,56 +254,10 @@
         <div class="items-grid"></div>
     </div>
 
-    <!-- KEYS -->
+    <!-- KEYS (gol) -->
     <div id="keysSection" class="page-section">
-        <div class="section-title">🔑 Chei de Cufăr</div>
-        <div class="items-grid">
-            <div class="item-card">
-                <div class="item-name" style="color:#7fd8ff;">❄️ Key Winter</div>
-                <div class="item-desc">Cheie înghețată cu recompense unice de iarnă.</div>
-                <div class="item-price">1.49 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('❄️ Key Winter', 1.49)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('❄️ Key Winter', 1.49)">+ Coș</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div class="item-name" style="color:#00e5ff;">🧊 Key Frost</div>
-                <div class="item-desc">Descuie cufărul legendar cu efecte de gheață.</div>
-                <div class="item-price">2.99 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('🧊 Key Frost', 2.99)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('🧊 Key Frost', 2.99)">+ Coș</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div class="item-name">Key Prime</div>
-                <div class="item-desc">Cheie specială pentru recompense unice.</div>
-                <div class="item-price">0.99 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('Key Prime', 0.99)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('Key Prime', 0.99)">+ Coș</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div class="item-name">Key Crimson</div>
-                <div class="item-desc">Descuie arsenalul ascuns de luptă.</div>
-                <div class="item-price">0.99 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('Key Crimson', 0.99)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('Key Crimson', 0.99)">+ Coș</button>
-                </div>
-            </div>
-            <div class="item-card">
-                <div class="item-name" style="color:#ffd700;">Key Gold</div>
-                <div class="item-desc">Cheie aurită cu premii strălucitoare.</div>
-                <div class="item-price">0.99 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('Key Gold', 0.99)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('Key Gold', 0.99)">+ Coș</button>
-                </div>
-            </div>
-        </div>
+        <div class="section-title">🔑 Keys</div>
+        <div class="items-grid"></div>
     </div>
 
     <!-- SHARDS -->
@@ -398,21 +341,15 @@
 </div>
 
 <script>
-    /* ====== DATE EDITABILE (înlocuiește cu cumpărăturile reale) ====== */
-    const recentPurchases = [
-        { player: "IceKing_RO",   item: "Key Frost",       time: "acum 5 min" },
-        { player: "SnowWolf",     item: "3000 Shards",     time: "acum 32 min" },
-        { player: "FrostByte",    item: "Spawner Gold",    time: "acum 1 oră" },
-        { player: "Crystal_X",    item: "Tag Personalizat",time: "acum 3 ore" },
-        { player: "BlizzardPro",  item: "Key Winter",      time: "acum 5 ore" }
-    ];
-    const topBuyers = [
-        { player: "SnowWolf",    total: 48.97 },
-        { player: "IceKing_RO",  total: 36.50 },
-        { player: "BlizzardPro", total: 24.99 },
-        { player: "FrostByte",   total: 19.47 },
-        { player: "Crystal_X",   total: 12.00 }
-    ];
+    /* ====== DATE REALE ======
+       Lasă listele goale până ai cumpărături adevărate.
+       Când cineva cumpără, adaugă manual (cea mai recentă prima):
+         recentPurchases: { player: "NumeJucator", item: "3000 Shards", time: "acum 5 min" }
+         topBuyers:       { player: "NumeJucator", total: 9.99 }   (ordonate descrescător după total)
+    */
+    const recentPurchases = [];
+    const topBuyers = [];
+
     const shards = [
         ["100 Shards", "Fonduri rapide pentru magazinul din joc.", 0.29],
         ["500 Shards", "Pachet avantajos pentru upgrade-uri.", 1.99],
@@ -425,18 +362,27 @@
 
     /* ====== RENDER ====== */
     (function init() {
-        const l = recentPurchases[0];
-        document.getElementById('latestWho').innerText = l.player;
-        document.getElementById('latestWhat').innerText = `a cumpărat ${l.item} • ${l.time}`;
+        if (recentPurchases.length > 0) {
+            const l = recentPurchases[0];
+            document.getElementById('latestWho').innerText = l.player;
+            document.getElementById('latestWhat').innerText = `a cumpărat ${l.item} • ${l.time}`;
+        } else {
+            document.getElementById('latestWho').innerText = "Fii primul!";
+            document.getElementById('latestWhat').innerText = "Încă nu există nicio cumpărătură.";
+        }
 
         const medals = ["🥇","🥈","🥉","4.","5."];
-        document.getElementById('topList').innerHTML = topBuyers.map((t, i) =>
-            `<div class="top-row"><span class="pos">${medals[i]}</span><span class="nm">${t.player}</span><span class="amt">${t.total.toFixed(2)} €</span></div>`
-        ).join("");
+        document.getElementById('topList').innerHTML = topBuyers.length
+            ? topBuyers.slice(0, 5).map((t, i) =>
+                `<div class="top-row"><span class="pos">${medals[i]}</span><span class="nm">${t.player}</span><span class="amt">${t.total.toFixed(2)} €</span></div>`
+              ).join("")
+            : `<div class="empty-note">Încă nu există cumpărători. Fii primul din top! 🏆</div>`;
 
-        document.getElementById('recentList').innerHTML = recentPurchases.map(r =>
-            `<div class="recent-item"><span><b>${r.player}</b> — ${r.item}</span><span>${r.time}</span></div>`
-        ).join("");
+        document.getElementById('recentList').innerHTML = recentPurchases.length
+            ? recentPurchases.slice(0, 5).map(r =>
+                `<div class="recent-item"><span><b>${r.player}</b> — ${r.item}</span><span>${r.time}</span></div>`
+              ).join("")
+            : `<div class="empty-note">Nicio cumpărătură recentă.</div>`;
 
         document.getElementById('shardsGrid').innerHTML = shards.map(s =>
             `<div class="item-card">
