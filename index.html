@@ -1,1 +1,616 @@
 
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WinterSMP Store</title>
+<style>
+    :root {
+        --bg: #050d1a;
+        --card1: #0d2038;
+        --card2: #07121f;
+        --ice: #7fd8ff;
+        --ice2: #bdeaff;
+        --accent: #38b6ff;
+        --glow: rgba(90, 200, 255, 0.45);
+    }
+    * { box-sizing: border-box; }
+    body {
+        background: radial-gradient(ellipse at top, #0b2545 0%, var(--bg) 60%);
+        background-attachment: fixed;
+        color: #fff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0 20px 20px;
+        text-align: center;
+        min-height: 100vh;
+    }
+
+    /* ZĂPADĂ */
+    #snow { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+    .wrap { position: relative; z-index: 2; }
+
+    /* TOPBAR + NAV */
+    .topbar {
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(5, 13, 26, 0.88);
+        backdrop-filter: blur(8px);
+        border-bottom: 2px solid var(--accent);
+        box-shadow: 0 4px 25px rgba(56, 182, 255, 0.25);
+        margin: 0 -20px 25px;
+        padding: 12px 20px;
+        display: flex; align-items: center; justify-content: center;
+        gap: 12px; flex-wrap: wrap;
+    }
+    .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 2px; color: var(--ice2); text-shadow: 0 0 15px var(--accent); margin-right: 10px; cursor: pointer; }
+    .nav-btn {
+        background: linear-gradient(135deg, var(--card1), var(--card2));
+        border: 2px solid var(--accent);
+        color: #fff; padding: 8px 18px; border-radius: 20px;
+        cursor: pointer; font-weight: bold; font-size: 0.95rem;
+        transition: 0.25s;
+    }
+    .nav-btn:hover, .nav-btn.active {
+        background: linear-gradient(135deg, #1e6fb0, #38b6ff);
+        box-shadow: 0 0 18px var(--glow);
+        transform: translateY(-2px);
+    }
+    .cart-icon-btn {
+        background: linear-gradient(135deg, #1e6fb0, #38b6ff);
+        border: 2px solid var(--ice2); color: #fff;
+        padding: 8px 18px; border-radius: 20px; cursor: pointer;
+        font-weight: bold; display: flex; align-items: center; gap: 8px;
+        box-shadow: 0 0 15px var(--glow); transition: 0.3s;
+    }
+    .cart-icon-btn:hover { transform: scale(1.06); }
+    .cart-badge { background: #fff; color: #0b2545; padding: 1px 8px; border-radius: 50%; font-size: 0.85rem; }
+
+    /* HERO */
+    .hero { margin: 10px auto 10px; max-width: 900px; }
+    .hero-flake { font-size: 4rem; display: inline-block; filter: drop-shadow(0 0 20px var(--accent)); animation: floatFlake 3s ease-in-out infinite; }
+    .hero-flake.r { animation-delay: 1.5s; }
+    @keyframes floatFlake { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-10px) rotate(15deg); } }
+    h1 { margin: 0; font-size: 3.4rem; letter-spacing: 4px; color: #fff; text-shadow: 0 0 25px var(--accent), 0 0 12px #1e90ff; display: inline-block; vertical-align: middle; margin: 0 10px; }
+    .hero-sub { color: var(--ice2); font-size: 1.2rem; margin-top: 8px; letter-spacing: 1px; }
+
+    .info-box {
+        max-width: 850px; margin: 25px auto;
+        background: linear-gradient(135deg, var(--card1), var(--card2));
+        border: 2px solid var(--accent); border-radius: 16px;
+        padding: 22px 30px; box-shadow: 0 0 20px var(--glow);
+        line-height: 1.7; color: #dcefff; font-size: 1.05rem; text-align: left;
+    }
+    .info-box h2 { color: var(--ice); margin-top: 0; text-align: center; text-shadow: 0 0 10px var(--glow); }
+    .info-box b { color: var(--ice); }
+
+    /* IP */
+    .server-ip-box {
+        display: inline-flex; align-items: center; gap: 12px;
+        background: linear-gradient(135deg, var(--card1), var(--card2));
+        border: 2px solid var(--accent); padding: 12px 30px; border-radius: 30px;
+        margin: 10px 0 25px; cursor: pointer; transition: 0.3s;
+        animation: pulseBox 2.2s ease-in-out infinite;
+    }
+    .server-ip-box:hover { transform: scale(1.04); }
+    .ip-text { font-size: 1.3rem; font-weight: bold; color: #00e5ff; letter-spacing: 1px; }
+    .ip-copy-hint { font-size: 0.9rem; color: #bcd; background: #12324f; padding: 5px 12px; border-radius: 15px; border: 1px solid var(--accent); }
+    @keyframes pulseBox {
+        0%,100% { box-shadow: 0 0 15px rgba(56,182,255,0.4); }
+        50% { box-shadow: 0 0 35px rgba(56,182,255,0.95); }
+    }
+
+    /* FEATURES */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 900px; margin: 0 auto 25px; }
+    .feature {
+        background: linear-gradient(135deg, var(--card1), var(--card2));
+        border: 2px solid var(--accent); border-radius: 14px; padding: 20px 14px;
+        box-shadow: 0 0 12px rgba(56,182,255,0.25); transition: 0.3s;
+    }
+    .feature:hover { transform: translateY(-5px); box-shadow: 0 0 25px var(--glow); }
+    .feature .ic { font-size: 2.2rem; margin-bottom: 8px; }
+    .feature b { color: var(--ice); display: block; margin-bottom: 6px; }
+    .feature span { font-size: 0.9rem; color: #cfe6f7; }
+
+    /* ULTIMA CUMPĂRĂTURĂ (pulsează) */
+    .latest {
+        max-width: 700px; margin: 0 auto 25px;
+        background: linear-gradient(135deg, #0f3b63, #0a2038);
+        border: 2px solid var(--ice2); border-radius: 18px; padding: 18px 25px;
+        animation: pulseLatest 1.8s ease-in-out infinite;
+    }
+    .latest .lbl { color: var(--ice2); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
+    .latest .who { font-size: 1.6rem; font-weight: 800; color: #fff; margin: 6px 0; text-shadow: 0 0 12px var(--accent); }
+    .latest .what { color: #ffe08a; font-weight: bold; }
+    @keyframes pulseLatest {
+        0%,100% { transform: scale(1); box-shadow: 0 0 15px rgba(127,216,255,0.4); }
+        50% { transform: scale(1.025); box-shadow: 0 0 40px rgba(127,216,255,1); }
+    }
+
+    /* TOP */
+    .top-box { max-width: 700px; margin: 0 auto 30px; background: linear-gradient(135deg, var(--card1), var(--card2)); border: 2px solid var(--accent); border-radius: 16px; padding: 20px; box-shadow: 0 0 20px var(--glow); }
+    .top-box h2 { margin: 0 0 15px; color: var(--ice); text-shadow: 0 0 10px var(--glow); }
+    .top-row { display: flex; align-items: center; justify-content: space-between; background: #07121f; border: 1px solid var(--accent); border-radius: 10px; padding: 10px 16px; margin-bottom: 8px; transition: 0.2s; }
+    .top-row:hover { transform: translateX(4px); background: #0c1f36; }
+    .top-row .pos { font-size: 1.4rem; width: 40px; text-align: left; }
+    .top-row .nm { flex: 1; text-align: left; font-weight: bold; }
+    .top-row .amt { color: #7dffb0; font-weight: bold; }
+    .top-row:nth-child(2) { border-color: #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.4); }
+
+    .recent-list { max-width: 700px; margin: 0 auto 30px; }
+    .recent-item { background: #07121f; border: 1px solid #1d5d8c; border-radius: 10px; padding: 8px 14px; margin-bottom: 6px; display: flex; justify-content: space-between; font-size: 0.92rem; }
+    .recent-item span:last-child { color: var(--ice); }
+
+    /* PAGINI */
+    .page-section { display: none; margin-top: 10px; }
+    .section-title { color: var(--ice); font-size: 2rem; margin-bottom: 30px; text-shadow: 0 0 10px var(--glow); }
+    .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; padding: 10px; }
+    .items-grid.single { grid-template-columns: minmax(260px, 340px); justify-content: center; }
+    .item-card {
+        background: linear-gradient(135deg, var(--card1), var(--card2));
+        border: 2px solid var(--accent); border-radius: 16px; padding: 25px 15px;
+        box-shadow: 0 0 15px rgba(56,182,255,0.3);
+        display: flex; flex-direction: column; align-items: center; transition: 0.3s;
+    }
+    .item-card:hover { transform: translateY(-5px); box-shadow: 0 0 28px var(--glow); }
+    .item-name { font-size: 1.4rem; font-weight: bold; color: #ffd700; margin-bottom: 15px; }
+    .item-desc { font-size: 0.95rem; color: #d4e8f7; line-height: 1.6; margin-bottom: 20px; min-height: 45px; }
+    .item-price { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; }
+    .empty-note { color: #7fa6c4; font-size: 1.05rem; padding: 40px 0; }
+
+    .tag-input-box { width: 80%; padding: 8px 12px; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; text-align: center; font-size: 1rem; margin-bottom: 15px; outline: none; }
+    .tag-input-box:focus { box-shadow: 0 0 8px var(--glow); }
+
+    .btn-container { display: flex; gap: 10px; margin-top: 10px; }
+    .buy-btn { background: linear-gradient(135deg, #1e90ff, #38d4ff); border: none; color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 0 10px var(--glow); }
+    .cart-add-btn { background: linear-gradient(135deg, #12324f, #1b4f7a); border: 1px solid var(--accent); color: #fff; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .buy-btn:hover, .cart-add-btn:hover { transform: scale(1.06); box-shadow: 0 0 15px var(--glow); }
+
+    /* MODAL */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: linear-gradient(135deg, #0d2038, #07121f); border: 2px solid var(--accent); border-radius: 20px; padding: 25px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 0 30px var(--glow); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: var(--ice2); cursor: pointer; background: none; border: none; }
+    .modal-title { color: var(--ice); font-size: 1.5rem; margin-bottom: 12px; }
+    .modal-details { color: #d4e8f7; margin-bottom: 15px; line-height: 1.5; text-align: left; }
+    .cart-item-row { display: flex; justify-content: space-between; align-items: center; background: #07121f; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--accent); font-size: 0.9rem; }
+    .cart-item-actions { display: flex; align-items: center; gap: 6px; }
+    .modal-input-group { margin-bottom: 15px; text-align: left; }
+    .modal-input-group label { display: block; font-size: 0.9rem; color: var(--ice2); margin-bottom: 5px; }
+    .modal-input-field { width: 100%; padding: 8px 12px; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; font-size: 1rem; outline: none; }
+    .modal-input-field:focus { box-shadow: 0 0 8px var(--glow); }
+    .promo-container { display: flex; gap: 8px; }
+    .promo-btn { background: #12324f; border: 1px solid var(--accent); color: #fff; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .promo-btn:hover { background: var(--accent); }
+    .quantity-control-modal { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+    .qty-btn { background: #12324f; border: 1px solid var(--accent); color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
+    .qty-btn:hover { background: var(--accent); }
+    .qty-input { width: 45px; text-align: center; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; padding: 5px; font-weight: bold; font-size: 1rem; outline: none; }
+    .paysafecard-box { background: #07121f; border: 2px solid #ff6600; border-radius: 12px; padding: 12px; margin-top: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+    .paysafecard-box:hover { box-shadow: 0 0 15px rgba(255,102,0,0.5); transform: scale(1.02); }
+    .paysafe-logo { font-size: 1.3rem; font-weight: bold; color: #ff6600; letter-spacing: 1px; }
+
+    footer { margin-top: 50px; color: #6b8aa3; font-size: 0.9rem; }
+    @media (max-width: 600px) { h1 { font-size: 2.2rem; } .hero-flake { font-size: 2.5rem; } }
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+
+<div class="wrap">
+
+    <!-- BARA DE SUS -->
+    <div class="topbar">
+        <div class="logo" onclick="showSection('homeSection')">❄️ WINTERSMP</div>
+        <button class="nav-btn active" data-sec="homeSection" onclick="showSection('homeSection')">🏠 Acasă</button>
+        <button class="nav-btn" data-sec="ranksSection" onclick="showSection('ranksSection')">🛡️ Ranks</button>
+        <button class="nav-btn" data-sec="keysSection" onclick="showSection('keysSection')">🔑 Keys</button>
+        <button class="nav-btn" data-sec="shardsSection" onclick="showSection('shardsSection')">💠 Shards</button>
+        <button class="nav-btn" data-sec="spawnersSection" onclick="showSection('spawnersSection')">📦 Spawner</button>
+        <button class="nav-btn" data-sec="tagsSection" onclick="showSection('tagsSection')">🏷️ Tags</button>
+        <button class="cart-icon-btn" onclick="openCartModal()">🛒 Coș <span class="cart-badge" id="cartCount">0</span></button>
+    </div>
+
+    <!-- PAGINA PRINCIPALĂ -->
+    <div id="homeSection" class="page-section" style="display:block;">
+        <div class="hero">
+            <span class="hero-flake">❄️</span>
+            <h1>WINTERSMP</h1>
+            <span class="hero-flake r">❄️</span>
+            <div class="hero-sub">Magazinul Oficial • Ediția de Iarnă ⛄</div>
+        </div>
+
+        <div class="server-ip-box" onclick="copyIP()">
+            <span>🎮 IP:</span>
+            <span class="ip-text">wintersmp.xyz</span>
+            <span class="ip-copy-hint" id="copyHint">Copiază IP</span>
+        </div>
+
+        <div class="info-box">
+            <h2>Bun venit pe WinterSMP ❄️</h2>
+            <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Aici începi de la zero: strângi resurse, îți construiești baza, îți faci o echipă și lupți pentru a deveni cel mai puternic jucător de pe server.</p>
+            <p>Comunitatea noastră este formată din playeri care colaborează, se întrec și creează împreună bătălii epice, baze impresionante și amintiri de neuitat. Serverul este mereu activ, cu evenimente, update-uri și surprize de sezon.</p>
+            <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>keys, shards, spawnere și tag-uri</b> cu care ești mereu cu un pas înaintea celorlalți. Mulțumim că faci parte din familia WinterSMP! 💙</p>
+        </div>
+
+        <div class="features">
+            <div class="feature"><div class="ic">⚔️</div><b>Survival Autentic</b><span>Progres real, fără scurtături. Munca ta contează.</span></div>
+            <div class="feature"><div class="ic">🏰</div><b>Comunitate Activă</b><span>Echipe, clanuri, bătălii și prietenii pe termen lung.</span></div>
+            <div class="feature"><div class="ic">🎁</div><b>Evenimente</b><span>Premii, concursuri și surprize în fiecare sezon.</span></div>
+            <div class="feature"><div class="ic">⚡</div><b>Server Stabil</b><span>Performanță bună și suport rapid pentru jucători.</span></div>
+        </div>
+
+        <!-- ULTIMA CUMPĂRĂTURĂ -->
+        <div class="latest">
+            <div class="lbl">🔥 Ultima cumpărătură</div>
+            <div class="who" id="latestWho">-</div>
+            <div class="what" id="latestWhat">-</div>
+        </div>
+
+        <!-- TOP CUMPĂRĂTORI -->
+        <div class="top-box">
+            <h2>🏆 Top Cumpărători</h2>
+            <div id="topList"></div>
+        </div>
+
+        <div class="top-box" style="border-color:#1d5d8c; box-shadow:none;">
+            <h2>🕒 Cumpărături recente</h2>
+            <div id="recentList" class="recent-list" style="margin:0;"></div>
+        </div>
+    </div>
+
+    <!-- RANKS (gol) -->
+    <div id="ranksSection" class="page-section">
+        <div class="section-title">🛡️ Ranks</div>
+        <div class="items-grid"></div>
+    </div>
+
+    <!-- KEYS -->
+    <div id="keysSection" class="page-section">
+        <div class="section-title">🔑 Chei de Cufăr</div>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-name" style="color:#7fd8ff;">❄️ Key Winter</div>
+                <div class="item-desc">Cheie înghețată cu recompense unice de iarnă.</div>
+                <div class="item-price">1.49 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('❄️ Key Winter', 1.49)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('❄️ Key Winter', 1.49)">+ Coș</button>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-name" style="color:#00e5ff;">🧊 Key Frost</div>
+                <div class="item-desc">Descuie cufărul legendar cu efecte de gheață.</div>
+                <div class="item-price">2.99 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('🧊 Key Frost', 2.99)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('🧊 Key Frost', 2.99)">+ Coș</button>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-name">Key Prime</div>
+                <div class="item-desc">Cheie specială pentru recompense unice.</div>
+                <div class="item-price">0.99 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('Key Prime', 0.99)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('Key Prime', 0.99)">+ Coș</button>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-name">Key Crimson</div>
+                <div class="item-desc">Descuie arsenalul ascuns de luptă.</div>
+                <div class="item-price">0.99 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('Key Crimson', 0.99)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('Key Crimson', 0.99)">+ Coș</button>
+                </div>
+            </div>
+            <div class="item-card">
+                <div class="item-name" style="color:#ffd700;">Key Gold</div>
+                <div class="item-desc">Cheie aurită cu premii strălucitoare.</div>
+                <div class="item-price">0.99 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('Key Gold', 0.99)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('Key Gold', 0.99)">+ Coș</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHARDS -->
+    <div id="shardsSection" class="page-section">
+        <div class="section-title">💠 Pachete de Shards</div>
+        <div class="items-grid" id="shardsGrid"></div>
+    </div>
+
+    <!-- SPAWNER -->
+    <div id="spawnersSection" class="page-section">
+        <div class="section-title">📦 Spawner</div>
+        <div class="items-grid single">
+            <div class="item-card">
+                <div class="item-name" style="color:#ffd700;">Spawner Gold</div>
+                <div class="item-desc">Spawner pentru resurse de aur.</div>
+                <div class="item-price">1.49 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('Spawner Gold', 1.49)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('Spawner Gold', 1.49)">+ Coș</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAGS -->
+    <div id="tagsSection" class="page-section">
+        <div class="section-title">🏷️ Tag-uri Exclusive</div>
+        <div class="items-grid single">
+            <div class="item-card">
+                <div class="item-name">Tag Personalizat</div>
+                <div class="item-desc">Scrie mai jos textul dorit pentru tag-ul tău pe chat:</div>
+                <input type="text" id="customTagName" class="tag-input-box" placeholder="">
+                <div class="item-price">2 euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckoutTag(2)">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addTagToCart(2)">+ Coș</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL PLATĂ / COȘ -->
+    <div id="checkoutModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            <div class="modal-title" id="modalTitleText">Finalizează Comanda</div>
+            <div class="modal-details" id="modalDetails"></div>
+
+            <div class="modal-input-group">
+                <label>Nume jucător Minecraft:</label>
+                <input type="text" id="playerNameInput" class="modal-input-field" placeholder="">
+            </div>
+
+            <div id="singleQtyContainer">
+                <div style="margin-bottom:8px; font-size:0.9rem; color:#bdeaff; text-align:left;">Alege cantitatea dorită:</div>
+                <div class="quantity-control-modal">
+                    <button class="qty-btn" onclick="changeModalQty(-1)">-</button>
+                    <input type="number" id="modalQtyInput" class="qty-input" value="1" min="1" oninput="updateModalViewFromInput()">
+                    <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+                </div>
+            </div>
+
+            <div class="modal-input-group">
+                <label>Cod de reducere:</label>
+                <div class="promo-container">
+                    <input type="text" id="promoCodeInput" class="modal-input-field" placeholder="">
+                    <button class="promo-btn" onclick="applyPromoCode()">Aplică</button>
+                </div>
+            </div>
+            <div id="promoMessage" style="font-size:0.85rem; margin-bottom:10px; text-align:left;"></div>
+
+            <div id="modalTotalPrice" style="margin-bottom:20px; font-weight:bold;"></div>
+
+            <div class="paysafecard-box" onclick="proceedToPayment()">
+                <span class="paysafe-logo">paysafecard</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 WinterSMP Store • Toate drepturile rezervate</footer>
+</div>
+
+<script>
+    /* ====== DATE EDITABILE (înlocuiește cu cumpărăturile reale) ====== */
+    const recentPurchases = [
+        { player: "IceKing_RO",   item: "Key Frost",       time: "acum 5 min" },
+        { player: "SnowWolf",     item: "3000 Shards",     time: "acum 32 min" },
+        { player: "FrostByte",    item: "Spawner Gold",    time: "acum 1 oră" },
+        { player: "Crystal_X",    item: "Tag Personalizat",time: "acum 3 ore" },
+        { player: "BlizzardPro",  item: "Key Winter",      time: "acum 5 ore" }
+    ];
+    const topBuyers = [
+        { player: "SnowWolf",    total: 48.97 },
+        { player: "IceKing_RO",  total: 36.50 },
+        { player: "BlizzardPro", total: 24.99 },
+        { player: "FrostByte",   total: 19.47 },
+        { player: "Crystal_X",   total: 12.00 }
+    ];
+    const shards = [
+        ["100 Shards", "Fonduri rapide pentru magazinul din joc.", 0.29],
+        ["500 Shards", "Pachet avantajos pentru upgrade-uri.", 1.99],
+        ["750 Shards", "Resurse extinse pentru dominație totală.", 2.49],
+        ["1500 Shards", "Pachetul clasic pentru upgrade-uri mari.", 4.99],
+        ["3000 Shards", "Rezerve masive pentru jucătorii avansați.", 9.99],
+        ["5000 Shards", "Pachetul suprem pentru supremație absolută.", 14.99],
+        ["10000 Shards", "Pachetul maxim pentru cei mai dedicați jucători.", 22.49]
+    ];
+
+    /* ====== RENDER ====== */
+    (function init() {
+        const l = recentPurchases[0];
+        document.getElementById('latestWho').innerText = l.player;
+        document.getElementById('latestWhat').innerText = `a cumpărat ${l.item} • ${l.time}`;
+
+        const medals = ["🥇","🥈","🥉","4.","5."];
+        document.getElementById('topList').innerHTML = topBuyers.map((t, i) =>
+            `<div class="top-row"><span class="pos">${medals[i]}</span><span class="nm">${t.player}</span><span class="amt">${t.total.toFixed(2)} €</span></div>`
+        ).join("");
+
+        document.getElementById('recentList').innerHTML = recentPurchases.map(r =>
+            `<div class="recent-item"><span><b>${r.player}</b> — ${r.item}</span><span>${r.time}</span></div>`
+        ).join("");
+
+        document.getElementById('shardsGrid').innerHTML = shards.map(s =>
+            `<div class="item-card">
+                <div class="item-name">${s[0]}</div>
+                <div class="item-desc">${s[1]}</div>
+                <div class="item-price">${s[2]} euro</div>
+                <div class="btn-container">
+                    <button class="buy-btn" onclick="openCheckout('${s[0]}', ${s[2]})">Cumpără</button>
+                    <button class="cart-add-btn" onclick="addToCart('${s[0]}', ${s[2]})">+ Coș</button>
+                </div>
+            </div>`
+        ).join("");
+    })();
+
+    /* ====== ZĂPADĂ ====== */
+    (function snow() {
+        const c = document.getElementById('snow'), ctx = c.getContext('2d');
+        let w, h, flakes = [];
+        function resize() { w = c.width = innerWidth; h = c.height = innerHeight; }
+        resize(); addEventListener('resize', resize);
+        for (let i = 0; i < 90; i++) flakes.push({ x: Math.random()*innerWidth, y: Math.random()*innerHeight, r: Math.random()*2.5+0.8, s: Math.random()*0.8+0.3, d: Math.random()*Math.PI*2 });
+        (function draw() {
+            ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = "rgba(220,240,255,0.85)";
+            flakes.forEach(f => {
+                f.y += f.s; f.d += 0.01; f.x += Math.sin(f.d) * 0.5;
+                if (f.y > h) { f.y = -5; f.x = Math.random()*w; }
+                ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI*2); ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        })();
+    })();
+
+    /* ====== LOGICĂ MAGAZIN ====== */
+    let cart = [];
+    let isCartCheckout = false;
+    let currentItemName = "";
+    let currentBasePrice = 0;
+    let discountRate = 0;
+
+    function copyIP() {
+        navigator.clipboard.writeText("wintersmp.xyz");
+        const hint = document.getElementById("copyHint");
+        hint.innerText = "Copiat!"; hint.style.color = "#00ffff";
+        setTimeout(() => { hint.innerText = "Copiază IP"; hint.style.color = "#bcd"; }, 2000);
+    }
+
+    function showSection(id) {
+        document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.sec === id));
+        window.scrollTo(0, 0);
+    }
+
+    function updateCartBadge() {
+        document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.quantity, 0);
+    }
+
+    function addToCart(name, price) {
+        const existing = cart.find(i => i.name === name);
+        if (existing) existing.quantity++; else cart.push({ name, price, quantity: 1 });
+        updateCartBadge();
+        alert("Produsul a fost adăugat în coș!");
+    }
+
+    function addTagToCart(price) {
+        const t = document.getElementById('customTagName').value.trim();
+        if (!t) { alert("Te rugăm să introduci textul pentru tag!"); return; }
+        addToCart(`Tag Personalizat ("${t}")`, price);
+    }
+
+    function openCartModal() {
+        if (cart.length === 0) { alert("Coșul tău este gol!"); return; }
+        isCartCheckout = true;
+        document.getElementById('modalTitleText').innerText = "Coș de Cumpărături";
+        document.getElementById('singleQtyContainer').style.display = 'none';
+        document.getElementById('promoCodeInput').value = "";
+        document.getElementById('promoMessage').innerText = "";
+        discountRate = 0;
+        renderCartDetails();
+        document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function renderCartDetails() {
+        let html = "", total = 0;
+        cart.forEach((item, index) => {
+            const t = item.price * item.quantity; total += t;
+            html += `<div class="cart-item-row">
+                <span><b>${item.name}</b> (x${item.quantity})</span>
+                <div class="cart-item-actions">
+                    <span>${t.toFixed(2)} €</span>
+                    <button onclick="changeCartItemQty(${index}, 1)" class="qty-btn" style="width:22px;height:22px;font-size:0.8rem;">+</button>
+                    <button onclick="changeCartItemQty(${index}, -1)" class="qty-btn" style="width:22px;height:22px;font-size:0.8rem;">-</button>
+                </div></div>`;
+        });
+        document.getElementById('modalDetails').innerHTML = html;
+        updateTotalPriceDisplay(total);
+    }
+
+    function changeCartItemQty(index, delta) {
+        cart[index].quantity += delta;
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
+        updateCartBadge();
+        if (cart.length === 0) { closeCheckout(); return; }
+        renderCartDetails();
+    }
+
+    function openCheckout(name, price) {
+        isCartCheckout = false; currentItemName = name; currentBasePrice = price; discountRate = 0;
+        document.getElementById('modalTitleText').innerText = "Finalizează Comanda";
+        document.getElementById('singleQtyContainer').style.display = 'block';
+        document.getElementById('modalQtyInput').value = 1;
+        document.getElementById('promoCodeInput').value = "";
+        document.getElementById('promoMessage').innerText = "";
+        document.getElementById('modalDetails').innerHTML = `Produs: <b>${name}</b><br>Preț unitar: <b>${price} euro</b>`;
+        updateSingleTotalPrice();
+        document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function openCheckoutTag(price) {
+        const t = document.getElementById('customTagName').value.trim();
+        if (!t) { alert("Te rugăm să introduci textul pentru tag înainte de cumpărare!"); return; }
+        openCheckout(`Tag Personalizat ("${t}")`, price);
+    }
+
+    function changeModalQty(change) {
+        const q = document.getElementById('modalQtyInput');
+        let v = parseInt(q.value) + change;
+        if (isNaN(v) || v < 1) v = 1;
+        q.value = v;
+        updateSingleTotalPrice();
+    }
+
+    function updateModalViewFromInput() {
+        const q = document.getElementById('modalQtyInput');
+        if (isNaN(parseInt(q.value)) || parseInt(q.value) < 1) q.value = 1;
+        updateSingleTotalPrice();
+    }
+
+    function updateSingleTotalPrice() {
+        const qty = parseInt(document.getElementById('modalQtyInput').value);
+        updateTotalPriceDisplay(currentBasePrice * qty);
+    }
+
+    function updateTotalPriceDisplay(subtotal) {
+        const finalPrice = subtotal * (1 - discountRate);
+        let txt = `Preț Total: ${finalPrice.toFixed(2)} euro`;
+        if (discountRate > 0) {
+            txt = `Preț Total: <span style="text-decoration:line-through;color:#aaa;">${subtotal.toFixed(2)} €</span> <span style="color:#00ff00;">${finalPrice.toFixed(2)} euro</span> (Reducere 50%)`;
+        }
+        document.getElementById('modalTotalPrice').innerHTML = txt;
+    }
+
+    function applyPromoCode() {
+        const code = document.getElementById('promoCodeInput').value.trim().toLowerCase();
+        const msg = document.getElementById('promoMessage');
+        if (code === "iarna2026") {
+            discountRate = 0.5; msg.style.color = "#00ff00"; msg.innerText = "Cod aplicat cu succes! Reducere de 50%.";
+        } else {
+            discountRate = 0; msg.style.color = "#ff6a4d"; msg.innerText = "Cod invalid sau expirat!";
+        }
+        if (isCartCheckout) updateTotalPriceDisplay(cart.reduce((s, i) => s + i.price * i.quantity, 0));
+        else updateSingleTotalPrice();
+    }
+
+    function closeCheckout() { document.getElementById('checkoutModal').style.display = 'none'; }
+
+    function proceedToPayment() {
+        const name = document.getElementById('playerNameInput').value.trim();
+        if (!name) { alert("Te rugăm să introduci numele tău de Minecraft!"); return; }
+        alert(`Redirecționare spre plată pentru jucătorul ${name}!`);
+        closeCheckout();
+        if (isCartCheckout) { cart = []; updateCartBadge(); }
+    }
+</script>
+</body>
+</html>
