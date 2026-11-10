@@ -1,939 +1,218 @@
-<!DOCTYPE html>
-<html lang="ro">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinterSMP Store ❄️</title>
 <style>
-    :root {
-        --bg: #040a16;
-        --card1: #0e2340;
-        --card2: #07121f;
-        --ice: #7fd8ff;
-        --ice2: #cdf0ff;
-        --accent: #38b6ff;
-        --gold: #ffd76a;
-        --glow: rgba(90, 200, 255, 0.45);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-        background: linear-gradient(180deg, #030814 0%, #0a1e3d 55%, #0d2b52 100%);
-        background-attachment: fixed;
-        color: #fff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0; padding: 0 20px 0;
-        text-align: center; min-height: 100vh;
-        overflow-x: hidden;
-    }
+.rar-common{--rc:#9ad7ff}.rar-rare{--rc:#4d8dff}.rar-epic{--rc:#c06bff}.rar-legend{--rc:#ffd76a}
+.item-card.r{border-color:var(--rc);box-shadow:0 0 24px color-mix(in srgb,var(--rc) 45%,transparent),inset 0 0 30px color-mix(in srgb,var(--rc) 10%,transparent)}
+.item-card.r:hover{box-shadow:0 0 44px var(--rc)}
+.item-card.r .item-name{color:var(--rc);text-shadow:0 0 12px var(--rc)}
+.item-card.r .halo{position:absolute;top:18px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--rc),transparent 68%);opacity:.35;animation:halo 3s ease-in-out infinite}
+@keyframes halo{50%{transform:scale(1.35);opacity:.6}}
+.rar-tag{position:relative;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--rc);border:1px solid var(--rc);padding:2px 12px;border-radius:12px;margin-bottom:10px}
+.chest{position:relative;font-size:3.7rem;margin-bottom:6px;filter:drop-shadow(0 0 16px var(--rc));animation:chestBob 2.6s ease-in-out infinite}
+@keyframes chestBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg) scale(1.08)}}
+.drops{font-size:.82rem;color:#bfe3f7;margin:-6px 0 14px;line-height:1.5}
+.sec-sub{color:#9fc6df;margin:-18px 0 28px;letter-spacing:1px}
 
-    /* ===== FUNDAL ===== */
-    .aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-    .aurora i {
-        position: absolute; width: 70vw; height: 45vh; border-radius: 50%;
-        filter: blur(70px); opacity: 0.35; mix-blend-mode: screen;
-        animation: drift 14s ease-in-out infinite alternate;
-    }
-    .aurora i:nth-child(1) { background: #1ee6c0; top: -12vh; left: -10vw; }
-    .aurora i:nth-child(2) { background: #3b82ff; top: -8vh; right: -15vw; animation-delay: -5s; }
-    .aurora i:nth-child(3) { background: #a066ff; top: 8vh; left: 25vw; opacity: 0.22; animation-delay: -9s; }
-    @keyframes drift { from { transform: translateX(-6vw) scaleY(0.9); } to { transform: translateX(8vw) scaleY(1.15); } }
+.modal-content{background:linear-gradient(160deg,#10294a,#060f1d 70%);border:2px solid transparent;background-clip:padding-box;box-shadow:0 0 0 2px #38b6ff,0 0 60px rgba(56,182,255,.5),inset 0 0 50px rgba(127,216,255,.08)}
+.modal-content::before{content:"❄";position:absolute;top:10px;left:18px;font-size:1.4rem;opacity:.6;animation:floatFlake 3s infinite}
+.modal-title{font-size:1.7rem;font-weight:800;background:linear-gradient(90deg,#fff,#7fd8ff,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:2px}
+.cart-item-row{background:linear-gradient(90deg,#0b1f38,#102c4d);border-radius:12px;transition:.25s;animation:fadeUp .35s ease}
+.cart-item-row:hover{transform:translateX(4px);box-shadow:0 0 14px var(--glow)}
+.modal-input-field:focus{border-color:#cdf0ff;box-shadow:0 0 16px var(--glow)}
+.paysafecard-box{background:linear-gradient(135deg,#1a0d00,#07121f);position:relative;overflow:hidden}
+.paysafecard-box::after{content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent);animation:sweep 2.8s infinite}
+@keyframes sweep{to{left:160%}}
+.clear-cart{background:transparent;border:1px solid #ff6a4d;color:#ff9d8a;padding:6px 14px;border-radius:14px;cursor:pointer;font-weight:700;margin-top:4px}
+.clear-cart:hover{background:#ff6a4d;color:#fff}
+.cart-summary{display:flex;justify-content:space-between;color:#9fc6df;font-size:.85rem;margin:6px 2px 10px}
+.cart-icon-btn.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.25) rotate(-6deg)}}
 
-    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    .stars span { position: absolute; width: 2px; height: 2px; background: #fff; border-radius: 50%; animation: twinkle 3s ease-in-out infinite; }
-    @keyframes twinkle { 0%,100% { opacity: .15; } 50% { opacity: 1; } }
-
-    .mountains { position: fixed; bottom: 0; left: 0; width: 100%; height: 34vh; z-index: 0; pointer-events: none; opacity: 0.9; }
-
-    #snow { position: fixed; inset: 0; pointer-events: none; z-index: 3; }
-    .wrap { position: relative; z-index: 2; }
-
-    .sparkle { position: fixed; z-index: 9999; pointer-events: none; font-size: 18px; animation: spark 0.9s ease-out forwards; }
-    @keyframes spark { from { opacity: 1; transform: translate(0,0) scale(1) rotate(0); } to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(180deg); } }
-
-    /* ===== SPLASH ===== */
-    #splash {
-        position: fixed; inset: 0; z-index: 5000;
-        background: radial-gradient(ellipse at center, #0c2a52 0%, #030814 75%);
-        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-        transition: opacity 0.8s ease, visibility 0.8s;
-    }
-    #splash.hide { opacity: 0; visibility: hidden; }
-    #splash .big { font-size: 5rem; animation: floatFlake 3s ease-in-out infinite; filter: drop-shadow(0 0 25px var(--accent)); }
-    #splash h2 { margin: 0; font-size: 2.4rem; letter-spacing: 5px; text-shadow: 0 0 25px var(--accent); }
-    #splash p { color: var(--ice2); margin: 0 0 12px; }
-    .splash-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-    .splash-btn {
-        padding: 12px 28px; border-radius: 30px; font-weight: bold; font-size: 1.05rem; cursor: pointer;
-        border: 2px solid var(--ice2); color: #fff; transition: 0.3s;
-        background: linear-gradient(135deg, #1e6fb0, #38b6ff); box-shadow: 0 0 22px var(--glow);
-    }
-    .splash-btn.alt { background: transparent; box-shadow: none; border-color: var(--accent); color: var(--ice2); }
-    .splash-btn:hover { transform: scale(1.07); }
-
-    /* ===== TOPBAR ===== */
-    .topbar {
-        position: sticky; top: 10px; z-index: 50;
-        background: rgba(8, 20, 40, 0.65);
-        backdrop-filter: blur(14px) saturate(1.4);
-        border: 1px solid rgba(127,216,255,0.45);
-        border-radius: 22px;
-        box-shadow: 0 8px 35px rgba(56,182,255,0.25), inset 0 0 25px rgba(127,216,255,0.08);
-        margin: 12px auto 25px; max-width: 1150px;
-        padding: 10px 18px;
-        display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
-    }
-    .logo { font-size: 1.35rem; font-weight: 800; letter-spacing: 3px; color: var(--ice2); text-shadow: 0 0 15px var(--accent); margin-right: 12px; cursor: pointer; white-space: nowrap; }
-    .nav-btn {
-        background: transparent; border: 1px solid transparent;
-        color: #d6efff; padding: 8px 16px; border-radius: 16px;
-        cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: 0.25s;
-    }
-    .nav-btn:hover { background: rgba(56,182,255,0.18); border-color: rgba(127,216,255,0.5); transform: translateY(-2px); }
-    .nav-btn.active {
-        background: linear-gradient(135deg, #1e6fb0, #38b6ff);
-        border-color: var(--ice2); color: #fff;
-        box-shadow: 0 0 18px var(--glow);
-    }
-    .cart-icon-btn {
-        margin-left: 8px;
-        background: linear-gradient(135deg, #ffb347, #ffd76a);
-        border: none; color: #3a2400;
-        padding: 9px 18px; border-radius: 18px; cursor: pointer;
-        font-weight: 800; display: flex; align-items: center; gap: 8px;
-        box-shadow: 0 0 18px rgba(255,215,106,0.5); transition: 0.3s;
-    }
-    .cart-icon-btn:hover { transform: scale(1.07); }
-    .cart-badge { background: #3a2400; color: #ffd76a; padding: 1px 8px; border-radius: 50%; font-size: 0.85rem; }
-
-    /* ===== HERO ===== */
-    .hero { margin: 20px auto 10px; max-width: 900px; }
-    .hero-flake { font-size: 4rem; display: inline-block; filter: drop-shadow(0 0 20px var(--accent)); animation: floatFlake 3s ease-in-out infinite; }
-    .hero-flake.r { animation-delay: 1.5s; }
-    @keyframes floatFlake { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-10px) rotate(15deg); } }
-    h1 {
-        font-size: 3.8rem; letter-spacing: 6px; display: inline-block; vertical-align: middle; margin: 0 10px;
-        background: linear-gradient(90deg, #ffffff, #7fd8ff, #ffffff, #bdeaff, #ffffff);
-        background-size: 250% auto;
-        -webkit-background-clip: text; background-clip: text; color: transparent;
-        animation: shimmer 5s linear infinite;
-        filter: drop-shadow(0 0 18px rgba(56,182,255,0.8));
-    }
-    @keyframes shimmer { to { background-position: 250% center; } }
-    .hero-sub { color: var(--ice2); font-size: 1.2rem; margin-top: 8px; letter-spacing: 2px; }
-
-    .pill-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 18px 0 26px; }
-    .pill {
-        display: inline-flex; align-items: center; gap: 10px;
-        background: rgba(10,28,52,0.8); border: 2px solid var(--accent);
-        padding: 11px 24px; border-radius: 30px; cursor: default;
-        box-shadow: 0 0 16px rgba(56,182,255,0.35);
-    }
-    .pill.click { cursor: pointer; transition: 0.3s; animation: pulseBox 2.2s ease-in-out infinite; }
-    .pill.click:hover { transform: scale(1.05); }
-    .ip-text { font-size: 1.25rem; font-weight: bold; color: #00e5ff; letter-spacing: 1px; }
-    .ip-copy-hint { font-size: 0.85rem; color: #bcd; background: #12324f; padding: 4px 12px; border-radius: 15px; border: 1px solid var(--accent); }
-    .dot { width: 11px; height: 11px; border-radius: 50%; background: #7a8b99; display: inline-block; }
-    .dot.on { background: #46ff8b; box-shadow: 0 0 12px #46ff8b; animation: blink 1.6s infinite; }
-    .dot.off { background: #ff5b5b; box-shadow: 0 0 10px #ff5b5b; }
-    @keyframes blink { 50% { opacity: 0.35; } }
-    @keyframes pulseBox {
-        0%,100% { box-shadow: 0 0 15px rgba(56,182,255,0.4); }
-        50% { box-shadow: 0 0 35px rgba(56,182,255,0.95); }
-    }
-
-    /* ===== COUNTDOWN ===== */
-    .countdown { max-width: 760px; margin: 0 auto 28px; }
-    .countdown .ttl { color: var(--gold); letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; text-shadow: 0 0 12px rgba(255,215,106,0.6); }
-    .cd-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .cd-box {
-        min-width: 96px; padding: 14px 10px; border-radius: 16px;
-        background: linear-gradient(160deg, rgba(20,60,100,0.85), rgba(7,18,31,0.9));
-        border: 1px solid rgba(127,216,255,0.6); box-shadow: 0 0 18px rgba(56,182,255,0.3);
-    }
-    .cd-box b { display: block; font-size: 2.2rem; color: #fff; text-shadow: 0 0 14px var(--accent); font-variant-numeric: tabular-nums; }
-    .cd-box span { font-size: 0.78rem; color: var(--ice2); letter-spacing: 2px; text-transform: uppercase; }
-
-    /* ===== CARDURI GENERALE ===== */
-    .glass {
-        background: linear-gradient(145deg, rgba(14,35,64,0.88), rgba(7,18,31,0.92));
-        border: 2px solid var(--accent); border-radius: 18px;
-        box-shadow: 0 0 22px var(--glow), inset 0 0 30px rgba(127,216,255,0.05);
-    }
-    .info-box { max-width: 850px; margin: 25px auto; padding: 24px 32px; line-height: 1.75; color: #dcefff; font-size: 1.05rem; text-align: left; }
-    .info-box h2 { color: var(--ice); margin-top: 0; text-align: center; text-shadow: 0 0 10px var(--glow); }
-    .info-box b { color: var(--ice); }
-
-    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; max-width: 950px; margin: 0 auto 28px; }
-    .feature { padding: 22px 14px; transition: 0.3s; }
-    .feature:hover { transform: translateY(-6px) rotate(-0.6deg); box-shadow: 0 0 30px var(--glow); }
-    .feature .ic { font-size: 2.4rem; margin-bottom: 8px; }
-    .feature b { color: var(--ice); display: block; margin-bottom: 6px; }
-    .feature span { font-size: 0.9rem; color: #cfe6f7; }
-
-    .steps { max-width: 950px; margin: 0 auto 30px; }
-    .steps h2, .faq h2, .top-box h2 { color: var(--ice); text-shadow: 0 0 10px var(--glow); margin: 0 0 16px; }
-    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-    .step { padding: 22px 18px; position: relative; }
-    .step .num { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; line-height: 34px; border-radius: 50%; background: linear-gradient(135deg,#ffb347,#ffd76a); color: #3a2400; font-weight: 800; box-shadow: 0 0 14px rgba(255,215,106,0.6); }
-    .step p { margin: 10px 0 0; color: #d4e8f7; font-size: 0.95rem; line-height: 1.55; }
-
-    .latest {
-        max-width: 700px; margin: 0 auto 25px; padding: 18px 25px;
-        background: linear-gradient(135deg, #12497c, #0a2038);
-        border: 2px solid var(--ice2); border-radius: 20px;
-        animation: pulseLatest 1.8s ease-in-out infinite;
-    }
-    .latest .lbl { color: var(--ice2); font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; }
-    .latest .who { font-size: 1.6rem; font-weight: 800; color: #fff; margin: 6px 0; text-shadow: 0 0 12px var(--accent); }
-    .latest .what { color: #ffe08a; font-weight: bold; }
-    @keyframes pulseLatest {
-        0%,100% { transform: scale(1); box-shadow: 0 0 15px rgba(127,216,255,0.4); }
-        50% { transform: scale(1.025); box-shadow: 0 0 40px rgba(127,216,255,1); }
-    }
-
-    .top-box { max-width: 700px; margin: 0 auto 28px; padding: 22px; }
-    .top-row { display: flex; align-items: center; justify-content: space-between; background: #07121f; border: 1px solid var(--accent); border-radius: 10px; padding: 10px 16px; margin-bottom: 8px; transition: 0.2s; }
-    .top-row:hover { transform: translateX(4px); background: #0c1f36; }
-    .top-row .pos { font-size: 1.4rem; width: 40px; text-align: left; }
-    .top-row .nm { flex: 1; text-align: left; font-weight: bold; }
-    .top-row .amt { color: #7dffb0; font-weight: bold; }
-    .top-row:nth-child(1) { border-color: #ffd700; box-shadow: 0 0 12px rgba(255,215,0,0.4); }
-    .recent-item { background: #07121f; border: 1px solid #1d5d8c; border-radius: 10px; padding: 8px 14px; margin-bottom: 6px; display: flex; justify-content: space-between; font-size: 0.92rem; }
-    .recent-item span:last-child { color: var(--ice); }
-    .empty-note { color: #7fa6c4; font-size: 1rem; padding: 14px 0; }
-
-    .faq { max-width: 800px; margin: 0 auto 30px; text-align: left; }
-    .faq h2 { text-align: center; }
-    details { margin-bottom: 10px; padding: 14px 20px; border-radius: 14px; background: rgba(10,28,52,0.85); border: 1px solid rgba(127,216,255,0.5); transition: 0.25s; }
-    details[open] { box-shadow: 0 0 20px var(--glow); }
-    summary { cursor: pointer; font-weight: 700; color: var(--ice2); list-style: none; }
-    summary::before { content: "❄ "; color: var(--accent); }
-    details p { margin: 10px 0 0; color: #d4e8f7; line-height: 1.6; }
-
-    /* ===== PAGINI ===== */
-    .page-section { display: none; margin-top: 10px; }
-    .page-section.show { animation: fadeUp 0.55s ease; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-    .section-title { color: var(--ice2); font-size: 2.1rem; margin-bottom: 30px; text-shadow: 0 0 14px var(--glow); letter-spacing: 2px; }
-    .items-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 1100px; margin: 0 auto; padding: 10px; }
-    .items-grid.single { grid-template-columns: minmax(260px, 340px); justify-content: center; }
-    .item-card {
-        position: relative; overflow: hidden;
-        padding: 28px 16px 24px; display: flex; flex-direction: column; align-items: center; transition: 0.3s;
-    }
-    .item-card::after {
-        content: ""; position: absolute; top: 0; left: -120%; width: 60%; height: 100%;
-        background: linear-gradient(100deg, transparent, rgba(255,255,255,0.12), transparent);
-        transform: skewX(-20deg); transition: 0.7s;
-    }
-    .item-card:hover::after { left: 140%; }
-    .item-card:hover { transform: translateY(-7px); box-shadow: 0 0 34px var(--glow); }
-    .item-icon { font-size: 3rem; margin-bottom: 8px; filter: drop-shadow(0 0 14px var(--accent)); animation: floatFlake 4s ease-in-out infinite; }
-    .item-name { font-size: 1.4rem; font-weight: bold; color: var(--gold); margin-bottom: 12px; }
-    .item-desc { font-size: 0.95rem; color: #d4e8f7; line-height: 1.6; margin-bottom: 18px; min-height: 45px; }
-    .item-price { font-size: 1.25rem; font-weight: 800; margin-bottom: 14px; color: #7dffb0; }
-    .ribbon { position: absolute; top: 14px; right: -34px; transform: rotate(40deg); background: linear-gradient(135deg,#ff6a4d,#ffb347); color: #fff; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; padding: 4px 40px; z-index: 2; }
-
-    .tag-input-box { width: 85%; padding: 9px 12px; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 10px; text-align: center; font-size: 1rem; margin-bottom: 15px; outline: none; }
-    .tag-input-box:focus { box-shadow: 0 0 10px var(--glow); }
-
-    .btn-container { display: flex; gap: 10px; margin-top: 8px; }
-    .buy-btn { background: linear-gradient(135deg, #1e90ff, #38d4ff); border: none; color: #fff; padding: 9px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 0 12px var(--glow); }
-    .cart-add-btn { background: linear-gradient(135deg, #12324f, #1b4f7a); border: 1px solid var(--accent); color: #fff; padding: 9px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-    .buy-btn:hover, .cart-add-btn:hover { transform: scale(1.08); box-shadow: 0 0 16px var(--glow); }
-
-    /* ===== MODAL ===== */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,5,15,0.82); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-content { background: linear-gradient(135deg, #0e2340, #07121f); border: 2px solid var(--accent); border-radius: 22px; padding: 26px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 0 40px var(--glow); position: relative; max-height: 90vh; overflow-y: auto; animation: fadeUp 0.35s ease; }
-    .modal-close { position: absolute; top: 14px; right: 20px; font-size: 1.6rem; color: var(--ice2); cursor: pointer; background: none; border: none; }
-    .modal-title { color: var(--ice); font-size: 1.5rem; margin-bottom: 12px; }
-    .modal-details { color: #d4e8f7; margin-bottom: 15px; line-height: 1.5; text-align: left; }
-    .cart-item-row { display: flex; justify-content: space-between; align-items: center; background: #07121f; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid var(--accent); font-size: 0.9rem; gap: 8px; }
-    .cart-item-actions { display: flex; align-items: center; gap: 6px; }
-    .modal-input-group { margin-bottom: 15px; text-align: left; }
-    .modal-input-group label { display: block; font-size: 0.9rem; color: var(--ice2); margin-bottom: 5px; }
-    .modal-input-field { width: 100%; padding: 9px 12px; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; font-size: 1rem; outline: none; }
-    .modal-input-field:focus { box-shadow: 0 0 8px var(--glow); }
-    .promo-container { display: flex; gap: 8px; }
-    .promo-btn { background: #12324f; border: 1px solid var(--accent); color: #fff; padding: 0 15px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
-    .promo-btn:hover { background: var(--accent); }
-    .quantity-control-modal { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
-    .qty-btn { background: #12324f; border: 1px solid var(--accent); color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 1rem; transition: 0.2s; }
-    .qty-btn:hover { background: var(--accent); }
-    .qty-input { width: 50px; text-align: center; background: #07121f; border: 1px solid var(--accent); color: #fff; border-radius: 8px; padding: 5px; font-weight: bold; font-size: 1rem; outline: none; }
-    .paysafecard-box { background: #07121f; border: 2px solid #ff6600; border-radius: 12px; padding: 12px; margin-top: 15px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
-    .paysafecard-box:hover { box-shadow: 0 0 18px rgba(255,102,0,0.6); transform: scale(1.03); }
-    .paysafe-logo { font-size: 1.3rem; font-weight: bold; color: #ff6600; letter-spacing: 1px; }
-
-    /* ===== MUZICĂ ===== */
-    #musicDock {
-        position: fixed; bottom: 18px; right: 18px; z-index: 900;
-        display: flex; align-items: center; gap: 10px;
-        background: rgba(8,20,40,0.85); backdrop-filter: blur(10px);
-        border: 1px solid var(--accent); border-radius: 30px; padding: 8px 14px;
-        box-shadow: 0 0 20px var(--glow);
-    }
-    #musicBtn { background: linear-gradient(135deg,#1e6fb0,#38b6ff); border: none; color: #fff; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; box-shadow: 0 0 14px var(--glow); }
-    #musicBtn.playing { animation: pulseBox 1.8s infinite; }
-    #volRange { width: 90px; accent-color: #38b6ff; }
-    #musicLabel { font-size: 0.8rem; color: var(--ice2); }
-
-    /* ===== TOAST ===== */
-    #toast {
-        position: fixed; left: 50%; bottom: 90px; transform: translateX(-50%) translateY(30px);
-        background: linear-gradient(135deg,#12497c,#0a2038); border: 1px solid var(--ice2);
-        padding: 12px 24px; border-radius: 30px; z-index: 3000; opacity: 0; pointer-events: none;
-        transition: 0.35s; box-shadow: 0 0 25px var(--glow); font-weight: 600;
-    }
-    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* ===== FOOTER ===== */
-    footer { position: relative; z-index: 2; margin-top: 60px; padding: 30px 0 120px; color: #7da0bb; font-size: 0.9rem; }
-    .pines { font-size: 1.8rem; letter-spacing: 6px; margin-bottom: 8px; filter: drop-shadow(0 0 8px rgba(56,182,255,0.6)); }
-
-    @media (max-width: 700px) {
-        h1 { font-size: 2.3rem; letter-spacing: 3px; } .hero-flake { font-size: 2.5rem; }
-        .cd-box { min-width: 72px; } .cd-box b { font-size: 1.6rem; }
-        #volRange, #musicLabel { display: none; }
-    }
+.shoot{position:fixed;z-index:1;width:130px;height:2px;background:linear-gradient(90deg,#fff,transparent);pointer-events:none;animation:shoot 1.2s ease-out forwards}
+@keyframes shoot{from{opacity:1;transform:translate(0,0) rotate(25deg)}to{opacity:0;transform:translate(320px,150px) rotate(25deg)}}
+.nav-btn.active{animation:pulseBox 2.4s infinite}
+.logo{animation:logoGlow 3s ease-in-out infinite alternate}
+@keyframes logoGlow{to{text-shadow:0 0 28px #7fd8ff,0 0 4px #fff}}
+.floaty{position:fixed;top:-40px;z-index:2;pointer-events:none;animation:fall linear forwards;opacity:.8}
+@keyframes fall{to{transform:translateY(112vh) rotate(360deg)}}
+#musicDock .nx{background:#12324f;border:1px solid var(--accent);color:#fff;width:34px;height:34px;border-radius:50%;cursor:pointer}
+#musicDock .nx:hover{background:var(--accent)}
+#musicLabel{min-width:110px;text-align:left}
 </style>
-</head>
-<body>
-
-<!-- ECRAN DE INTRARE -->
-<div id="splash">
-    <div class="big">❄️</div>
-    <h2>WINTERSMP</h2>
-    <p>Bine ai venit în magazinul de iarnă ⛄</p>
-    <div class="splash-btns">
-        <button class="splash-btn" onclick="enterSite(true)">🎵 Intră cu muzică</button>
-        <button class="splash-btn alt" onclick="enterSite(false)">Fără muzică</button>
-    </div>
-</div>
-
-<!-- FUNDAL -->
-<div class="aurora"><i></i><i></i><i></i></div>
-<div class="stars" id="stars"></div>
-<svg class="mountains" viewBox="0 0 1440 320" preserveAspectRatio="none">
-    <defs>
-        <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b3b66"/><stop offset="1" stop-color="#0a1c36"/></linearGradient>
-        <linearGradient id="mg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12294a"/><stop offset="1" stop-color="#060f1f"/></linearGradient>
-    </defs>
-    <path fill="url(#mg1)" d="M0,240 L120,120 L210,190 L330,70 L450,200 L560,110 L690,210 L820,90 L940,200 L1060,130 L1190,215 L1300,120 L1440,210 L1440,320 L0,320Z"/>
-    <path fill="#e9f6ff" opacity="0.85" d="M330,70 L300,105 L322,98 L336,112 L352,96 L372,108Z M820,90 L790,122 L812,116 L826,128 L842,114 L862,124Z M120,120 L96,148 L116,142 L130,152 L146,140Z M1300,120 L1276,150 L1296,144 L1310,154 L1326,142Z"/>
-    <path fill="url(#mg2)" d="M0,285 L150,215 L280,270 L420,205 L560,275 L700,225 L860,282 L1000,215 L1140,278 L1290,225 L1440,280 L1440,320 L0,320Z"/>
-</svg>
-<canvas id="snow"></canvas>
-
-<div class="wrap">
-
-    <!-- MENIU -->
-    <div class="topbar">
-        <div class="logo" onclick="showSection('homeSection')">❄ WINTERSMP</div>
-        <button class="nav-btn active" data-sec="homeSection" onclick="showSection('homeSection')">🏠 Acasă</button>
-        <button class="nav-btn" data-sec="ranksSection" onclick="showSection('ranksSection')">🛡️ Ranks</button>
-        <button class="nav-btn" data-sec="keysSection" onclick="showSection('keysSection')">🔑 Keys</button>
-        <button class="nav-btn" data-sec="shardsSection" onclick="showSection('shardsSection')">💠 Shards</button>
-        <button class="nav-btn" data-sec="spawnersSection" onclick="showSection('spawnersSection')">📦 Spawner</button>
-        <button class="nav-btn" data-sec="tagsSection" onclick="showSection('tagsSection')">🏷️ Tags</button>
-        <button class="cart-icon-btn" onclick="openCartModal()">🛒 Coș <span class="cart-badge" id="cartCount">0</span></button>
-    </div>
-
-    <!-- ACASĂ -->
-    <div id="homeSection" class="page-section show" style="display:block;">
-        <div class="hero">
-            <span class="hero-flake">❄️</span>
-            <h1>WINTERSMP</h1>
-            <span class="hero-flake r">❄️</span>
-            <div class="hero-sub">Magazinul Oficial • Ediția de Iarnă ⛄</div>
-        </div>
-
-        <div class="pill-row">
-            <div class="pill click" onclick="copyIP()">
-                <span>🎮 IP:</span>
-                <span class="ip-text">wintersmp.xyz</span>
-                <span class="ip-copy-hint" id="copyHint">Copiază IP</span>
-            </div>
-            <div class="pill">
-                <span class="dot" id="statusDot"></span>
-                <span id="statusText">Se verifică serverul...</span>
-            </div>
-        </div>
-
-        <div class="countdown">
-            <div class="ttl">🎄 Până la Crăciun mai sunt</div>
-            <div class="cd-row">
-                <div class="cd-box"><b id="cdD">--</b><span>zile</span></div>
-                <div class="cd-box"><b id="cdH">--</b><span>ore</span></div>
-                <div class="cd-box"><b id="cdM">--</b><span>min</span></div>
-                <div class="cd-box"><b id="cdS">--</b><span>sec</span></div>
-            </div>
-        </div>
-
-        <div class="info-box glass">
-            <h2>Bun venit pe WinterSMP ❄️</h2>
-            <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Aici începi de la zero: strângi resurse, îți construiești baza, îți faci o echipă și lupți pentru a deveni cel mai puternic jucător de pe server.</p>
-            <p>Comunitatea noastră este formată din playeri care colaborează, se întrec și creează împreună bătălii epice, baze impresionante și amintiri de neuitat. Serverul este mereu activ, cu evenimente, update-uri și surprize de sezon.</p>
-            <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere și tag-uri</b> cu care ești mereu cu un pas înaintea celorlalți. Mulțumim că faci parte din familia WinterSMP! 💙</p>
-        </div>
-
-        <div class="features">
-            <div class="feature glass"><div class="ic">⚔️</div><b>Survival Autentic</b><span>Progres real, fără scurtături. Munca ta contează.</span></div>
-            <div class="feature glass"><div class="ic">🏰</div><b>Comunitate Activă</b><span>Echipe, clanuri, bătălii și prietenii pe termen lung.</span></div>
-            <div class="feature glass"><div class="ic">🎁</div><b>Evenimente</b><span>Premii, concursuri și surprize în fiecare sezon.</span></div>
-            <div class="feature glass"><div class="ic">⚡</div><b>Server Stabil</b><span>Performanță bună și suport rapid pentru jucători.</span></div>
-        </div>
-
-        <div class="steps">
-            <h2>🧭 Cum intri pe server</h2>
-            <div class="steps-grid">
-                <div class="step glass"><div class="num">1</div><b>Deschide Minecraft</b><p>Pornește Minecraft Java și intră la <i>Multiplayer</i>.</p></div>
-                <div class="step glass"><div class="num">2</div><b>Adaugă serverul</b><p>Apasă <i>Add Server</i> și scrie adresa <b>wintersmp.xyz</b>.</p></div>
-                <div class="step glass"><div class="num">3</div><b>Cumpără cu nick-ul tău</b><p>Scrie exact numele tău din joc când plătești, ca să primești produsele.</p></div>
-            </div>
-        </div>
-
-        <div class="latest">
-            <div class="lbl">🔥 Ultima cumpărătură</div>
-            <div class="who" id="latestWho">-</div>
-            <div class="what" id="latestWhat">-</div>
-        </div>
-
-        <div class="top-box glass">
-            <h2>🏆 Top Cumpărători</h2>
-            <div id="topList"></div>
-        </div>
-
-        <div class="top-box glass" style="border-color:#1d5d8c; box-shadow:none;">
-            <h2>🕒 Cumpărături recente</h2>
-            <div id="recentList"></div>
-        </div>
-
-        <div class="faq">
-            <h2>❓ Întrebări frecvente</h2>
-            <details><summary>Când primesc produsele după plată?</summary><p>Produsele se livrează pe serverul de joc după confirmarea plății. Dacă după câteva minute nu ai primit nimic, scrie unui admin pe server.</p></details>
-            <details><summary>Ce nume trebuie să scriu la plată?</summary><p>Numele tău exact din Minecraft, cu literele mari și mici la fel ca în joc. O greșeală de scriere poate duce produsul altui jucător.</p></details>
-            <details><summary>Pot plăti cu paysafecard?</summary><p>Da, butonul de plată te duce la pagina de plată, unde alegi metoda dorită.</p></details>
-            <details><summary>Cum folosesc un cod de reducere?</summary><p>Scrie codul în fereastra de comandă, în câmpul „Cod de reducere", și apasă „Aplică".</p></details>
-        </div>
-    </div>
-
-    <!-- RANKS (gol) -->
-    <div id="ranksSection" class="page-section">
-        <div class="section-title">🛡️ Ranks</div>
-        <div class="items-grid"></div>
-    </div>
-
-    <!-- KEYS (gol) -->
-    <div id="keysSection" class="page-section">
-        <div class="section-title">🔑 Keys</div>
-        <div class="items-grid"></div>
-    </div>
-
-    <!-- SHARDS -->
-    <div id="shardsSection" class="page-section">
-        <div class="section-title">💠 Pachete de Shards</div>
-        <div class="items-grid" id="shardsGrid"></div>
-    </div>
-
-    <!-- SPAWNER -->
-    <div id="spawnersSection" class="page-section">
-        <div class="section-title">📦 Spawner</div>
-        <div class="items-grid single">
-            <div class="item-card glass">
-                <div class="item-icon">📦</div>
-                <div class="item-name">Spawner Gold</div>
-                <div class="item-desc">Spawner pentru resurse de aur.</div>
-                <div class="item-price">1.49 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('Spawner Gold', 1.49)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('Spawner Gold', 1.49)">+ Coș</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAGS -->
-    <div id="tagsSection" class="page-section">
-        <div class="section-title">🏷️ Tag-uri Exclusive</div>
-        <div class="items-grid single">
-            <div class="item-card glass">
-                <div class="item-icon">🏷️</div>
-                <div class="item-name">Tag Personalizat</div>
-                <div class="item-desc">Scrie mai jos textul dorit pentru tag-ul tău pe chat:</div>
-                <input type="text" id="customTagName" class="tag-input-box" maxlength="16" placeholder="">
-                <div class="item-price">2 euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckoutTag(2)">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addTagToCart(2)">+ Coș</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODAL PLATĂ / COȘ -->
-    <div id="checkoutModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeCheckout()">&times;</button>
-            <div class="modal-title" id="modalTitleText">Finalizează Comanda</div>
-            <div class="modal-details" id="modalDetails"></div>
-
-            <div class="modal-input-group">
-                <label>Nume jucător Minecraft:</label>
-                <input type="text" id="playerNameInput" class="modal-input-field" placeholder="">
-            </div>
-
-            <div id="singleQtyContainer">
-                <div style="margin-bottom:8px; font-size:0.9rem; color:#bdeaff; text-align:left;">Alege cantitatea dorită:</div>
-                <div class="quantity-control-modal">
-                    <button class="qty-btn" onclick="changeModalQty(-1)">-</button>
-                    <input type="number" id="modalQtyInput" class="qty-input" value="1" min="1" oninput="updateModalViewFromInput()">
-                    <button class="qty-btn" onclick="changeModalQty(1)">+</button>
-                </div>
-            </div>
-
-            <div class="modal-input-group">
-                <label>Cod de reducere:</label>
-                <div class="promo-container">
-                    <input type="text" id="promoCodeInput" class="modal-input-field" placeholder="">
-                    <button class="promo-btn" onclick="applyPromoCode()">Aplică</button>
-                </div>
-            </div>
-            <div id="promoMessage" style="font-size:0.85rem; margin-bottom:10px; text-align:left;"></div>
-
-            <div id="modalTotalPrice" style="margin-bottom:20px; font-weight:bold;"></div>
-
-            <div class="paysafecard-box" onclick="proceedToPayment()">
-                <span class="paysafe-logo">paysafecard</span>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="pines">🎄 ❄️ 🎄 ❄️ 🎄</div>
-        © 2026 WinterSMP Store • Toate drepturile rezervate
-    </footer>
-</div>
-
-<!-- MUZICĂ -->
-<div id="musicDock">
-    <button id="musicBtn" onclick="Music.toggle()" title="Muzică de iarnă">🎵</button>
-    <span id="musicLabel">Muzică</span>
-    <input type="range" id="volRange" min="0" max="100" value="50" oninput="Music.setVolume(this.value/100)">
-</div>
-<div id="toast"></div>
 
 <script>
-    /* ====== SETĂRI ====== */
-    const SERVER_IP = "wintersmp.xyz";
+(function(){
+/* ===== LINKURI PLATĂ (înlocuiește cu ale tale din Tebex) ===== */
+["Winter Key","Frost Key","Aurora Key","Legendary Chest","Mega Winter Chest",
+ "Spawner Zombie","Spawner Skeleton","Spawner Iron Golem","Spawner Blaze","Spawner Creeper"
+].forEach(k=>{ if(!PAYMENT_LINKS[k]) PAYMENT_LINKS[k]="https://numele-tau.tebex.io/package/"+k.replace(/ /g,"-"); });
 
-    // Dacă vrei o melodie reală, pune aici linkul direct către un fișier .mp3 pe care ai voie să-l folosești.
-    // Lasă gol ca să se folosească melodia de iarnă generată în browser.
-    const MUSIC_URL = "";
+/* ===== CARDURI ===== */
+const RAR={common:["COMMON","rar-common"],rare:["RARE","rar-rare"],epic:["EPIC","rar-epic"],legend:["LEGENDARY","rar-legend"]};
+function card(n,desc,drops,price,icon,rar,ribbon,cls){
+  const r=RAR[rar];
+  return `<div class="item-card glass r ${r[1]}">
+    ${ribbon?`<div class="ribbon">${ribbon}</div>`:""}
+    <div class="halo"></div>
+    <div class="${cls||'chest'}">${icon}</div>
+    <div class="rar-tag">${r[0]}</div>
+    <div class="item-name">${n}</div>
+    <div class="item-desc">${desc}</div>
+    ${drops?`<div class="drops">${drops}</div>`:""}
+    <div class="item-price">${price} euro</div>
+    <div class="btn-container">
+      <button class="buy-btn" onclick="openCheckout('${n}',${price})">Cumpără</button>
+      <button class="cart-add-btn" onclick="addToCart('${n}',${price})">+ Coș</button>
+    </div></div>`;
+}
 
-    // Pune linkurile pachetelor tale (de ex. din Tebex). Cheia = numele produsului exact.
-    const PAYMENT_LINKS = {
-        "100 Shards":   "https://numele-tau.tebex.io/package/111111",
-        "500 Shards":   "https://numele-tau.tebex.io/package/222222",
-        "750 Shards":   "https://numele-tau.tebex.io/package/333333",
-        "1500 Shards":  "https://numele-tau.tebex.io/package/444444",
-        "3000 Shards":  "https://numele-tau.tebex.io/package/555555",
-        "5000 Shards":  "https://numele-tau.tebex.io/package/666666",
-        "10000 Shards": "https://numele-tau.tebex.io/package/777777",
-        "Spawner Gold": "https://numele-tau.tebex.io/package/888888",
-        "Tag Personalizat": "https://numele-tau.tebex.io/package/999999"
-    };
+/* ===== KEYS ===== */
+document.querySelector('#keysSection .items-grid').innerHTML=[
+ card("Winter Key","Cheia de început: loot de iarnă garantat.","❄ Resurse • Unelte • Shards mici",0.99,"🗝️","common"),
+ card("Frost Key","Chest înghețat cu premii rare și blocuri speciale.","🧊 Armuri enchantate • Shards • Blocuri rare",1.99,"🔑","rare"),
+ card("Aurora Key","Se deschide sub aurora boreală. Premii epice.","🌌 Spawnere • Tag-uri • Shards mari",3.49,"🧰","epic","POPULAR"),
+ card("Legendary Chest","Cufărul legendar al regelui gheții.","👑 Set complet • Spawnere rare • Shards 2000+",5.99,"🎁","legend"),
+ card("Mega Winter Chest","Cel mai mare cufăr din magazin.","💎 Tot ce e mai bun • Bonus exclusiv",9.99,"🏆","legend","BEST VALUE")
+].join("");
+document.querySelector('#keysSection .section-title').insertAdjacentHTML('afterend','<div class="sec-sub">Deschide cufere și câștigă premii de iarnă ✨</div>');
 
-    /* ====== CUMPĂRĂTORI REALI (completezi manual, cea mai recentă prima) ======
-       recentPurchases: { player: "NumeJucator", item: "3000 Shards", time: "acum 5 min" }
-       topBuyers:       { player: "NumeJucator", total: 9.99 }   (descrescător după total) */
-    const recentPurchases = [];
-    const topBuyers = [];
+/* ===== SPAWNERE ===== */
+const spG=document.querySelector('#spawnersSection .items-grid');
+spG.classList.remove('single');
+spG.innerHTML=[
+ card("Spawner Gold","Aur constant, ideal pentru farm lung.","",1.49,"🪙","rare","","item-icon"),
+ card("Spawner Zombie","Zombi infinit: carne și XP.","",0.99,"🧟","common","","item-icon"),
+ card("Spawner Skeleton","Oase și săgeți pentru farm automat.","",0.99,"💀","common","","item-icon"),
+ card("Spawner Iron Golem","Fier la greu, fără efort.","",1.99,"🗿","rare","","item-icon"),
+ card("Spawner Blaze","Blaze rods pentru poțiuni și enchant-uri.","",2.49,"🔥","epic","POPULAR","item-icon"),
+ card("Spawner Creeper","Praf de pușcă pentru războaie mari.","",2.99,"💥","epic","","item-icon")
+].join("");
+document.querySelector('#spawnersSection .section-title').insertAdjacentHTML('afterend','<div class="sec-sub">Alege spawner-ul care îți trebuie ⛏️</div>');
 
-    const shards = [
-        ["100 Shards", "Fonduri rapide pentru magazinul din joc.", 0.29, "💠", ""],
-        ["500 Shards", "Pachet avantajos pentru upgrade-uri.", 1.99, "💠", ""],
-        ["750 Shards", "Resurse extinse pentru dominație totală.", 2.49, "💎", ""],
-        ["1500 Shards", "Pachetul clasic pentru upgrade-uri mari.", 4.99, "💎", ""],
-        ["3000 Shards", "Rezerve masive pentru jucătorii avansați.", 9.99, "🔷", "POPULAR"],
-        ["5000 Shards", "Pachetul suprem pentru supremație absolută.", 14.99, "🔷", ""],
-        ["10000 Shards", "Pachetul maxim pentru cei mai dedicați jucători.", 22.49, "👑", "BEST VALUE"]
-    ];
+/* ===== COȘ ===== */
+const _render=renderCartDetails;
+renderCartDetails=function(){
+  _render();
+  const n=cart.reduce((s,i)=>s+i.quantity,0), box=document.getElementById('modalDetails');
+  box.insertAdjacentHTML('afterbegin',`<div class="cart-summary"><span>🛒 ${n} produse</span><span>${cart.length} tipuri</span></div>`);
+  box.insertAdjacentHTML('beforeend',`<div style="text-align:center"><button class="clear-cart" onclick="cart.length=0;updateCartBadge();closeCheckout();toast('🧹 Coș golit')">🗑 Golește coșul</button></div>`);
+};
+const _add=addToCart;
+addToCart=function(n,p){
+  _add(n,p);
+  const b=document.querySelector('.cart-icon-btn');
+  b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');
+};
 
-    function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+/* ===== EFECTE ===== */
+setInterval(()=>{
+  const s=document.createElement('i');s.className='shoot';
+  s.style.top=Math.random()*35+'vh';s.style.left=Math.random()*60+'vw';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1300);
+},3200);
+setInterval(()=>{
+  const f=document.createElement('span');f.className='floaty';
+  f.textContent=['❄','❅','❆','✨','⛄'][Math.floor(Math.random()*5)];
+  f.style.left=Math.random()*100+'vw';f.style.fontSize=(14+Math.random()*22)+'px';
+  f.style.animationDuration=(9+Math.random()*8)+'s';
+  document.body.appendChild(f);setTimeout(()=>f.remove(),18000);
+},1400);
+document.addEventListener('mousemove',e=>{
+  const c=e.target.closest&&e.target.closest('.item-card');
+  document.querySelectorAll('.item-card').forEach(x=>{if(x!==c)x.style.transform='';});
+  if(!c)return;
+  const r=c.getBoundingClientRect(),dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;
+  c.style.transform=`perspective(700px) rotateY(${dx*12}deg) rotateX(${-dy*12}deg) translateY(-6px)`;
+});
 
-    function toast(msg) {
-        const t = document.getElementById('toast');
-        t.innerText = msg; t.classList.add('show');
-        clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove('show'), 2200);
-    }
+/* ===== MUZICĂ: 4 MELODII ===== */
+const T=[
+ {n:"❄️ Aurora Bells",bpm:68,ch:[[57,60,64],[53,57,60],[48,52,55],[55,59,62]],arp:[0,1,2,1,2,1,2,1]},
+ {n:"🌌 Frozen Lake",bpm:54,ch:[[50,53,57],[46,50,53],[53,57,60],[48,52,55]],arp:[0,2,1,2,0,2,1,2]},
+ {n:"🎄 Winter Waltz",bpm:92,ch:[[60,64,67],[65,69,72],[67,71,74],[60,64,67]],arp:[0,1,2,1,2,1]},
+ {n:"🔔 Sleigh Night",bpm:112,ch:[[62,65,69],[58,62,65],[55,58,62],[57,61,64]],arp:[0,2,1,2]}
+];
+let ctx,master,timer,playing=false,cur=0,step=0,nextT=0,vol=.5;
+const hz=m=>440*Math.pow(2,(m-69)/12);
+function setup(){
+  ctx=new(window.AudioContext||window.webkitAudioContext)();
+  master=ctx.createGain();master.gain.value=vol*.6;
+  const delay=ctx.createDelay();delay.delayTime.value=.4;
+  const fb=ctx.createGain();fb.gain.value=.38;
+  const wet=ctx.createGain();wet.gain.value=.45;
+  delay.connect(fb);fb.connect(delay);delay.connect(wet);wet.connect(ctx.destination);
+  master.connect(ctx.destination);master.connect(delay);
+}
+function bell(t,m,v,d){
+  [[1,1],[2.76,.22],[5.4,.07]].forEach(([r,a])=>{
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.frequency.value=hz(m)*r;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(v*a,t+.01);
+    g.gain.exponentialRampToValueAtTime(.0001,t+d);
+    o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05);
+  });
+}
+function pad(t,notes,d){
+  notes.forEach(m=>{
+    const o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter();
+    o.type='triangle';o.frequency.value=hz(m-12);
+    f.type='lowpass';f.frequency.value=650;
+    g.gain.setValueAtTime(0,t);
+    g.gain.linearRampToValueAtTime(.05,t+1.2);
+    g.gain.linearRampToValueAtTime(.0001,t+d);
+    o.connect(f);f.connect(g);g.connect(master);o.start(t);o.stop(t+d+.1);
+  });
+}
+function sched(){
+  const k=T[cur],E=60/k.bpm/2,L=k.arp.length;
+  while(nextT<ctx.currentTime+.4){
+    const bar=Math.floor(step/L),pos=step%L,ch=k.ch[bar%4];
+    if(pos===0){pad(nextT,ch,E*L+.6);bell(nextT,ch[0]-12,.2,3);}
+    bell(nextT,ch[k.arp[pos]]+12,.11,2.2);
+    if(pos%2===0&&Math.random()<.4)bell(nextT,ch[Math.floor(Math.random()*3)]+24,.08,2.4);
+    step++;nextT+=E;
+  }
+}
+function ui(){
+  const b=document.getElementById('musicBtn');
+  b.classList.toggle('playing',playing);
+  b.innerText=playing?'🔊':'🎵';
+  document.getElementById('musicLabel').innerText=playing?T[cur].n:'Muzică';
+}
+function start(){
+  if(playing)return;
+  if(!ctx)setup();
+  ctx.resume();nextT=ctx.currentTime+.1;
+  timer=setInterval(sched,100);playing=true;ui();
+}
+function stop(){
+  if(!playing)return;
+  clearInterval(timer);if(ctx)ctx.suspend();
+  playing=false;ui();
+}
+function next(){
+  cur=(cur+1)%T.length;step=0;
+  if(ctx)nextT=ctx.currentTime+.1;
+  if(!playing)start();else ui();
+  toast('🎶 '+T[cur].n);
+}
+Music.start=start;Music.stop=stop;
+Music.toggle=()=>playing?stop():start();
+Music.setVolume=v=>{vol=v;if(master)master.gain.value=v*.6;};
+Music.next=next;
 
-    /* ====== RENDER ====== */
-    (function init() {
-        if (recentPurchases.length > 0) {
-            const l = recentPurchases[0];
-            document.getElementById('latestWho').innerText = l.player;
-            document.getElementById('latestWhat').innerText = `a cumpărat ${l.item} • ${l.time}`;
-        } else {
-            document.getElementById('latestWho').innerText = "Fii primul!";
-            document.getElementById('latestWhat').innerText = "Încă nu există nicio cumpărătură.";
-        }
+const nx=document.createElement('button');
+nx.className='nx';nx.title='Melodia următoare';nx.textContent='⏭';
+nx.onclick=next;
+document.getElementById('musicBtn').after(nx);
 
-        const medals = ["🥇","🥈","🥉","4.","5."];
-        document.getElementById('topList').innerHTML = topBuyers.length
-            ? topBuyers.slice(0, 5).map((t, i) =>
-                `<div class="top-row"><span class="pos">${medals[i]}</span><span class="nm">${esc(t.player)}</span><span class="amt">${t.total.toFixed(2)} €</span></div>`).join("")
-            : `<div class="empty-note">Încă nu există cumpărători. Fii primul din top! 🏆</div>`;
-
-        document.getElementById('recentList').innerHTML = recentPurchases.length
-            ? recentPurchases.slice(0, 5).map(r =>
-                `<div class="recent-item"><span><b>${esc(r.player)}</b> — ${esc(r.item)}</span><span>${esc(r.time)}</span></div>`).join("")
-            : `<div class="empty-note">Nicio cumpărătură recentă.</div>`;
-
-        document.getElementById('shardsGrid').innerHTML = shards.map(s =>
-            `<div class="item-card glass">
-                ${s[4] ? `<div class="ribbon">${s[4]}</div>` : ""}
-                <div class="item-icon">${s[3]}</div>
-                <div class="item-name">${s[0]}</div>
-                <div class="item-desc">${s[1]}</div>
-                <div class="item-price">${s[2]} euro</div>
-                <div class="btn-container">
-                    <button class="buy-btn" onclick="openCheckout('${s[0]}', ${s[2]})">Cumpără</button>
-                    <button class="cart-add-btn" onclick="addToCart('${s[0]}', ${s[2]})">+ Coș</button>
-                </div>
-            </div>`).join("");
-
-        // stele
-        const st = document.getElementById('stars');
-        for (let i = 0; i < 70; i++) {
-            const s = document.createElement('span');
-            s.style.left = Math.random()*100 + "%";
-            s.style.top = Math.random()*70 + "%";
-            s.style.animationDelay = (Math.random()*3) + "s";
-            s.style.opacity = Math.random();
-            st.appendChild(s);
-        }
-    })();
-
-    /* ====== ZĂPADĂ (2 straturi) ====== */
-    (function snow() {
-        const c = document.getElementById('snow'), ctx = c.getContext('2d');
-        let w, h, flakes = [];
-        function resize() { w = c.width = innerWidth; h = c.height = innerHeight; }
-        resize(); addEventListener('resize', resize);
-        for (let i = 0; i < 130; i++) {
-            const far = Math.random() < 0.55;
-            flakes.push({ x: Math.random()*innerWidth, y: Math.random()*innerHeight,
-                r: far ? Math.random()*1.4+0.5 : Math.random()*3+1.6,
-                s: far ? Math.random()*0.5+0.2 : Math.random()*1.1+0.6,
-                d: Math.random()*Math.PI*2, a: far ? 0.55 : 0.9 });
-        }
-        (function draw() {
-            ctx.clearRect(0, 0, w, h);
-            flakes.forEach(f => {
-                f.y += f.s; f.d += 0.012; f.x += Math.sin(f.d) * 0.6;
-                if (f.y > h + 5) { f.y = -5; f.x = Math.random()*w; }
-                ctx.fillStyle = `rgba(225,243,255,${f.a})`;
-                ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        })();
-    })();
-
-    /* ====== STELUȚE LA CLICK ====== */
-    addEventListener('click', e => {
-        for (let i = 0; i < 6; i++) {
-            const s = document.createElement('span');
-            s.className = 'sparkle'; s.innerText = ['❄','✦','✧','❅'][i % 4];
-            s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
-            s.style.color = i % 2 ? '#bdeaff' : '#ffffff';
-            s.style.setProperty('--dx', (Math.random()*80-40) + 'px');
-            s.style.setProperty('--dy', (Math.random()*80-40) + 'px');
-            document.body.appendChild(s);
-            setTimeout(() => s.remove(), 900);
-        }
-    });
-
-    /* ====== NUMĂRĂTOARE CRĂCIUN ====== */
-    (function countdown() {
-        function tick() {
-            const now = new Date();
-            let target = new Date(now.getFullYear(), 11, 25, 0, 0, 0);
-            if (now > target) target = new Date(now.getFullYear() + 1, 11, 25, 0, 0, 0);
-            let diff = Math.floor((target - now) / 1000);
-            const d = Math.floor(diff / 86400); diff %= 86400;
-            const hh = Math.floor(diff / 3600); diff %= 3600;
-            const m = Math.floor(diff / 60), s = diff % 60;
-            document.getElementById('cdD').innerText = d;
-            document.getElementById('cdH').innerText = String(hh).padStart(2, '0');
-            document.getElementById('cdM').innerText = String(m).padStart(2, '0');
-            document.getElementById('cdS').innerText = String(s).padStart(2, '0');
-        }
-        tick(); setInterval(tick, 1000);
-    })();
-
-    /* ====== STATUS SERVER ====== */
-    async function checkServer() {
-        const dot = document.getElementById('statusDot'), txt = document.getElementById('statusText');
-        try {
-            const r = await fetch(`https://api.mcsrvstat.us/3/${SERVER_IP}`);
-            const d = await r.json();
-            if (d.online) {
-                dot.className = 'dot on';
-                const p = d.players ? `${d.players.online} / ${d.players.max}` : "";
-                txt.innerText = p ? `Online • ${p} jucători` : "Online";
-            } else {
-                dot.className = 'dot off'; txt.innerText = "Server offline";
-            }
-        } catch (e) {
-            dot.className = 'dot'; txt.innerText = "Status indisponibil";
-        }
-    }
-    checkServer(); setInterval(checkServer, 60000);
-
-    /* ====== MUZICĂ DE IARNĂ (originală, generată în browser) ====== */
-    const Music = (() => {
-        let ctx = null, master = null, timer = null, playing = false, step = 0, nextTime = 0, audioEl = null, vol = 0.5;
-        const EIGHTH = 60 / 68 / 2;
-        const chords = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]]; // Am  F  C  G
-        const penta = [69,72,74,76,79,81];
-        const hz = m => 440 * Math.pow(2, (m - 69) / 12);
-
-        function setup() {
-            ctx = new (window.AudioContext || window.webkitAudioContext)();
-            master = ctx.createGain(); master.gain.value = vol * 0.6;
-            const delay = ctx.createDelay(); delay.delayTime.value = 0.43;
-            const fb = ctx.createGain(); fb.gain.value = 0.38;
-            const wet = ctx.createGain(); wet.gain.value = 0.45;
-            delay.connect(fb); fb.connect(delay); delay.connect(wet); wet.connect(ctx.destination);
-            master.connect(ctx.destination); master.connect(delay);
-        }
-        function bell(t, m, v, d) {
-            [[1, 1], [2.76, 0.22], [5.4, 0.07]].forEach(([r, a]) => {
-                const o = ctx.createOscillator(), g = ctx.createGain();
-                o.type = 'sine'; o.frequency.value = hz(m) * r;
-                g.gain.setValueAtTime(0, t);
-                g.gain.linearRampToValueAtTime(v * a, t + 0.01);
-                g.gain.exponentialRampToValueAtTime(0.0001, t + d);
-                o.connect(g); g.connect(master); o.start(t); o.stop(t + d + 0.05);
-            });
-        }
-        function pad(t, notes, d) {
-            notes.forEach(m => {
-                const o = ctx.createOscillator(), g = ctx.createGain(), f = ctx.createBiquadFilter();
-                o.type = 'triangle'; o.frequency.value = hz(m - 12);
-                f.type = 'lowpass'; f.frequency.value = 650;
-                g.gain.setValueAtTime(0, t);
-                g.gain.linearRampToValueAtTime(0.05, t + 1.4);
-                g.gain.linearRampToValueAtTime(0.0001, t + d);
-                o.connect(f); f.connect(g); g.connect(master); o.start(t); o.stop(t + d + 0.1);
-            });
-        }
-        const arp = [0, 1, 2, 1, 2, 1, 2, 1];
-        function schedule() {
-            while (nextTime < ctx.currentTime + 0.4) {
-                const bar = Math.floor(step / 8), pos = step % 8, ch = chords[bar % 4];
-                if (pos === 0) { pad(nextTime, ch, EIGHTH * 8 + 0.6); bell(nextTime, ch[0] - 12, 0.2, 3); }
-                bell(nextTime, ch[arp[pos]] + 12, 0.11, 2.2);
-                if (pos % 2 === 0 && Math.random() < 0.45) bell(nextTime, penta[Math.floor(Math.random() * penta.length)], 0.1, 2.6);
-                step++; nextTime += EIGHTH;
-            }
-        }
-        function ui(on) {
-            const b = document.getElementById('musicBtn');
-            b.classList.toggle('playing', on);
-            b.innerText = on ? '🔊' : '🎵';
-            document.getElementById('musicLabel').innerText = on ? 'Se aude' : 'Muzică';
-        }
-        function start() {
-            if (playing) return;
-            if (MUSIC_URL) {
-                if (!audioEl) { audioEl = new Audio(MUSIC_URL); audioEl.loop = true; }
-                audioEl.volume = vol; audioEl.play().catch(() => {});
-            } else {
-                if (!ctx) setup();
-                ctx.resume();
-                nextTime = ctx.currentTime + 0.1;
-                timer = setInterval(schedule, 100);
-            }
-            playing = true; ui(true);
-        }
-        function stop() {
-            if (!playing) return;
-            if (MUSIC_URL && audioEl) audioEl.pause();
-            if (timer) { clearInterval(timer); timer = null; }
-            if (ctx) ctx.suspend();
-            playing = false; ui(false);
-        }
-        return {
-            start, stop,
-            toggle() { playing ? stop() : start(); },
-            setVolume(v) {
-                vol = v;
-                if (audioEl) audioEl.volume = v;
-                if (master) master.gain.value = v * 0.6;
-            }
-        };
-    })();
-
-    function enterSite(withMusic) {
-        document.getElementById('splash').classList.add('hide');
-        if (withMusic) Music.start();
-    }
-
-    /* ====== LOGICĂ MAGAZIN ====== */
-    let cart = [];
-    let isCartCheckout = false;
-    let currentItemName = "";
-    let currentBasePrice = 0;
-    let discountRate = 0;
-
-    function copyIP() {
-        navigator.clipboard.writeText(SERVER_IP);
-        const hint = document.getElementById("copyHint");
-        hint.innerText = "Copiat!"; hint.style.color = "#00ffff";
-        setTimeout(() => { hint.innerText = "Copiază IP"; hint.style.color = "#bcd"; }, 2000);
-    }
-
-    function showSection(id) {
-        document.querySelectorAll('.page-section').forEach(s => { s.style.display = 'none'; s.classList.remove('show'); });
-        const el = document.getElementById(id);
-        el.style.display = 'block'; void el.offsetWidth; el.classList.add('show');
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.sec === id));
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function updateCartBadge() {
-        document.getElementById('cartCount').innerText = cart.reduce((s, i) => s + i.quantity, 0);
-    }
-
-    function addToCart(name, price) {
-        const existing = cart.find(i => i.name === name);
-        if (existing) existing.quantity++; else cart.push({ name, price, quantity: 1 });
-        updateCartBadge();
-        toast("❄️ Produsul a fost adăugat în coș!");
-    }
-
-    function addTagToCart(price) {
-        const t = document.getElementById('customTagName').value.trim();
-        if (!t) { toast("Introdu textul pentru tag!"); return; }
-        addToCart(`Tag Personalizat ("${t}")`, price);
-    }
-
-    function openCartModal() {
-        if (cart.length === 0) { toast("🛒 Coșul tău este gol!"); return; }
-        isCartCheckout = true;
-        document.getElementById('modalTitleText').innerText = "Coș de Cumpărături";
-        document.getElementById('singleQtyContainer').style.display = 'none';
-        document.getElementById('promoCodeInput').value = "";
-        document.getElementById('promoMessage').innerText = "";
-        discountRate = 0;
-        renderCartDetails();
-        document.getElementById('checkoutModal').style.display = 'flex';
-    }
-
-    function renderCartDetails() {
-        let html = "", total = 0;
-        cart.forEach((item, index) => {
-            const t = item.price * item.quantity; total += t;
-            html += `<div class="cart-item-row">
-                <span><b>${esc(item.name)}</b> (x${item.quantity})</span>
-                <div class="cart-item-actions">
-                    <span>${t.toFixed(2)} €</span>
-                    <button onclick="changeCartItemQty(${index}, 1)" class="qty-btn" style="width:24px;height:24px;font-size:0.8rem;">+</button>
-                    <button onclick="changeCartItemQty(${index}, -1)" class="qty-btn" style="width:24px;height:24px;font-size:0.8rem;">-</button>
-                </div></div>`;
-        });
-        document.getElementById('modalDetails').innerHTML = html;
-        updateTotalPriceDisplay(total);
-    }
-
-    function changeCartItemQty(index, delta) {
-        cart[index].quantity += delta;
-        if (cart[index].quantity <= 0) cart.splice(index, 1);
-        updateCartBadge();
-        if (cart.length === 0) { closeCheckout(); return; }
-        renderCartDetails();
-    }
-
-    function openCheckout(name, price) {
-        isCartCheckout = false; currentItemName = name; currentBasePrice = price; discountRate = 0;
-        document.getElementById('modalTitleText').innerText = "Finalizează Comanda";
-        document.getElementById('singleQtyContainer').style.display = 'block';
-        document.getElementById('modalQtyInput').value = 1;
-        document.getElementById('promoCodeInput').value = "";
-        document.getElementById('promoMessage').innerText = "";
-        document.getElementById('modalDetails').innerHTML = `Produs: <b>${esc(name)}</b><br>Preț unitar: <b>${price} euro</b>`;
-        updateSingleTotalPrice();
-        document.getElementById('checkoutModal').style.display = 'flex';
-    }
-
-    function openCheckoutTag(price) {
-        const t = document.getElementById('customTagName').value.trim();
-        if (!t) { toast("Introdu textul pentru tag înainte de cumpărare!"); return; }
-        openCheckout(`Tag Personalizat ("${t}")`, price);
-    }
-
-    function changeModalQty(change) {
-        const q = document.getElementById('modalQtyInput');
-        let v = parseInt(q.value) + change;
-        if (isNaN(v) || v < 1) v = 1;
-        q.value = v;
-        updateSingleTotalPrice();
-    }
-
-    function updateModalViewFromInput() {
-        const q = document.getElementById('modalQtyInput');
-        if (isNaN(parseInt(q.value)) || parseInt(q.value) < 1) q.value = 1;
-        updateSingleTotalPrice();
-    }
-
-    function updateSingleTotalPrice() {
-        const qty = parseInt(document.getElementById('modalQtyInput').value) || 1;
-        updateTotalPriceDisplay(currentBasePrice * qty);
-    }
-
-    function updateTotalPriceDisplay(subtotal) {
-        const finalPrice = subtotal * (1 - discountRate);
-        let txt = `Preț Total: ${finalPrice.toFixed(2)} euro`;
-        if (discountRate > 0) {
-            txt = `Preț Total: <span style="text-decoration:line-through;color:#aaa;">${subtotal.toFixed(2)} €</span> <span style="color:#00ff00;">${finalPrice.toFixed(2)} euro</span> (Reducere 50%)`;
-        }
-        document.getElementById('modalTotalPrice').innerHTML = txt;
-    }
-
-    function applyPromoCode() {
-        const code = document.getElementById('promoCodeInput').value.trim().toLowerCase();
-        const msg = document.getElementById('promoMessage');
-        if (code === "iarna2026") {
-            discountRate = 0.5; msg.style.color = "#00ff00"; msg.innerText = "Cod aplicat cu succes! Reducere de 50%.";
-        } else {
-            discountRate = 0; msg.style.color = "#ff6a4d"; msg.innerText = "Cod invalid sau expirat!";
-        }
-        if (isCartCheckout) updateTotalPriceDisplay(cart.reduce((s, i) => s + i.price * i.quantity, 0));
-        else updateSingleTotalPrice();
-    }
-
-    function closeCheckout() { document.getElementById('checkoutModal').style.display = 'none'; }
-
-    function proceedToPayment() {
-        const name = document.getElementById('playerNameInput').value.trim();
-        if (!name) { toast("Introdu numele tău de Minecraft!"); return; }
-
-        if (isCartCheckout) {
-            toast("Pentru moment poți plăti un singur produs odată. Folosește butonul Cumpără.");
-            return;
-        }
-
-        const key = currentItemName.startsWith("Tag Personalizat") ? "Tag Personalizat" : currentItemName;
-        const link = PAYMENT_LINKS[key];
-        if (!link || link.includes("numele-tau")) {
-            toast("Acest produs nu are încă link de plată setat.");
-            return;
-        }
-        window.location.href = link;
-    }
+/* ===== PORNIRE AUTOMATĂ LA PRIMUL CLICK / TASTĂ / ATINGERE =====
+   (browserul nu permite sunet înainte de o acțiune a utilizatorului) */
+const ev=['click','keydown','touchstart'];
+function first(e){
+  if(e.target&&e.target.closest&&e.target.closest('#musicDock'))return; // nu intra în conflict cu butoanele muzicii
+  start();
+  ev.forEach(x=>removeEventListener(x,first,true));
+}
+ev.forEach(x=>addEventListener(x,first,true));
+})();
 </script>
-</body>
-</html>
