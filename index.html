@@ -34,7 +34,7 @@ body{background:linear-gradient(180deg,#030814,#0a1e3d 55%,#0d2b52) fixed;color:
 @keyframes bump{40%{transform:scale(1.25) rotate(-6deg)}}
 .cart-badge{background:#3a2400;color:#ffd76a;padding:1px 8px;border-radius:4px;font-size:.85rem}
 
-.hero{margin:20px auto 10px;max-width:900px}
+.hero{margin:30px auto 14px;max-width:900px}
 .hero-flake{font-size:4rem;display:inline-block;filter:drop-shadow(0 0 20px var(--accent));animation:floatFlake 3s ease-in-out infinite}.hero-flake.r{animation-delay:1.5s}
 @keyframes floatFlake{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(15deg)}}
 h1{font-size:3.8rem;letter-spacing:6px;display:inline-block;vertical-align:middle;margin:0 10px;background:linear-gradient(90deg,#fff,#7fd8ff,#fff,#bdeaff,#fff);background-size:250% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 5s linear infinite;filter:drop-shadow(0 0 18px rgba(56,182,255,.8))}
@@ -42,7 +42,7 @@ h1{font-size:3.8rem;letter-spacing:6px;display:inline-block;vertical-align:middl
 .hero-sub{color:var(--ice2);font-size:1.2rem;margin-top:8px;letter-spacing:2px}
 .pill-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
 .pill{display:inline-flex;align-items:center;gap:10px;background:rgba(10,28,52,.8);border:2px solid var(--accent);padding:11px 24px;border-radius:8px;box-shadow:0 0 16px rgba(56,182,255,.35)}
-.pill.click{cursor:pointer;transition:.3s;animation:pulseBox 2.2s ease-in-out infinite}.pill.click:hover{transform:scale(1.05)}
+.pill.click{cursor:pointer;transition:.3s}.pill.click:hover{transform:scale(1.05)}
 .ip-text{font-size:1.25rem;font-weight:bold;color:#00e5ff}.ip-copy-hint{font-size:.85rem;color:#bcd;background:#12324f;padding:4px 12px;border-radius:5px;border:1px solid var(--accent)}
 .dot{width:11px;height:11px;border-radius:50%;background:#7a8b99;display:inline-block}
 .dot.on{background:#46ff8b;box-shadow:0 0 12px #46ff8b;animation:blink 1.6s infinite}.dot.off{background:#ff5b5b;box-shadow:0 0 10px #ff5b5b}
@@ -54,15 +54,15 @@ h1{font-size:3.8rem;letter-spacing:6px;display:inline-block;vertical-align:middl
 .cd-box{min-width:96px;padding:14px 10px;border-radius:16px;background:linear-gradient(160deg,rgba(20,60,100,.85),rgba(7,18,31,.9));border:1px solid rgba(127,216,255,.6);box-shadow:0 0 18px rgba(56,182,255,.3)}
 .cd-box b{display:block;font-size:2.2rem;text-shadow:0 0 14px var(--accent);font-variant-numeric:tabular-nums}.cd-box span{font-size:.78rem;color:var(--ice2);letter-spacing:2px;text-transform:uppercase}
 
-.glass{background:linear-gradient(145deg,rgba(14,35,64,.88),rgba(7,18,31,.92));border:2px solid var(--accent);border-radius:18px;box-shadow:0 0 22px var(--glow),inset 0 0 30px rgba(127,216,255,.05)}
+.glass{background:linear-gradient(145deg,rgba(14,35,64,.88),rgba(7,18,31,.92));border:1px solid rgba(127,216,255,.38);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.35),inset 0 0 30px rgba(127,216,255,.04)}
 .info-box{max-width:850px;margin:25px auto;padding:24px 32px;line-height:1.75;color:#dcefff;text-align:left}
 .info-box h2{color:var(--ice);margin-top:0;text-align:center}.info-box b{color:var(--ice)}
 .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:950px;margin:0 auto 28px}
 .feature{padding:22px 14px;transition:.3s}.feature:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--glow)}
 .feature .ic{font-size:2.4rem}.feature b{color:var(--ice);display:block;margin:6px 0}.feature span{font-size:.9rem;color:#cfe6f7}
-.latest{max-width:700px;margin:0 auto 25px;padding:18px 25px;background:linear-gradient(135deg,#12497c,#0a2038);border:2px solid var(--ice2);border-radius:20px;animation:pulseLatest 1.8s ease-in-out infinite}
+.latest{max-width:700px;margin:0 auto 25px;padding:18px 25px;background:linear-gradient(135deg,#12497c,#0a2038);border:2px solid var(--ice2);border-radius:20px;animation:pulseLatest 3.2s ease-in-out infinite}
 .latest .lbl{color:var(--ice2);letter-spacing:2px;text-transform:uppercase;font-size:.9rem}.latest .who{font-size:1.6rem;font-weight:800;margin:6px 0}.latest .what{color:#ffe08a;font-weight:bold}
-@keyframes pulseLatest{50%{transform:scale(1.025);box-shadow:0 0 40px rgba(127,216,255,1)}}
+@keyframes pulseLatest{50%{box-shadow:0 0 34px rgba(127,216,255,.5)}}
 .top-box{max-width:700px;margin:0 auto 28px;padding:22px}.top-box h2,.faq h2{color:var(--ice);margin:0 0 16px}
 .top-row,.recent-item{display:flex;justify-content:space-between;background:#07121f;border:1px solid var(--accent);border-radius:10px;padding:10px 16px;margin-bottom:8px}
 .top-row .nm{flex:1;text-align:left;font-weight:bold;margin-left:10px}.top-row .amt{color:#7dffb0;font-weight:bold}
@@ -73,7 +73,7 @@ details[open]{box-shadow:0 0 20px var(--glow)}summary{cursor:pointer;font-weight
 
 .page-section{display:none;margin-top:10px}.page-section.show{animation:fadeUp .55s ease}
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
-.section-title{color:var(--ice2);font-size:2.1rem;margin-bottom:30px;letter-spacing:2px}.sec-sub{color:#9fc6df;margin:-18px 0 28px;letter-spacing:1px}
+.section-title{color:var(--ice2);font-size:2.1rem;margin-bottom:30px;letter-spacing:2px}.section-title::after{content:"";display:block;width:70px;height:3px;margin:12px auto 0;border-radius:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.sec-sub{color:#9fc6df;margin:-10px 0 28px;letter-spacing:1px}
 .items-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;max-width:1100px;margin:0 auto;padding:10px}
 .items-grid.single{grid-template-columns:minmax(260px,340px);justify-content:center}
 .item-card{position:relative;overflow:hidden;padding:28px 16px 24px;display:flex;flex-direction:column;align-items:center;transition:.3s}
@@ -83,7 +83,7 @@ details[open]{box-shadow:0 0 20px var(--glow)}summary{cursor:pointer;font-weight
 .item-name{font-size:1.4rem;font-weight:bold;color:var(--gold);margin-bottom:12px}.item-desc{font-size:.95rem;color:#d4e8f7;line-height:1.6;margin-bottom:14px;min-height:45px}
 .drops{font-size:.82rem;color:#bfe3f7;margin:-4px 0 14px}.item-price{font-size:1.25rem;font-weight:800;margin-bottom:14px;color:#7dffb0}
 .rar-common{--rc:#9ad7ff}.rar-rare{--rc:#4d8dff}.rar-epic{--rc:#c06bff}.rar-legend{--rc:#ffd76a}
-.item-card.r{border-color:var(--rc);box-shadow:0 0 24px color-mix(in srgb,var(--rc) 45%,transparent)}.item-card.r:hover{box-shadow:0 0 44px var(--rc)}
+.item-card.r{border-width:2px;border-color:var(--rc);box-shadow:0 0 24px color-mix(in srgb,var(--rc) 45%,transparent)}.item-card.r:hover{box-shadow:0 0 44px var(--rc)}
 .item-card.r .item-name{color:var(--rc);text-shadow:0 0 12px var(--rc)}
 .halo{position:absolute;top:18px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,var(--rc),transparent 68%);opacity:.35;animation:halo 3s ease-in-out infinite}
 @keyframes halo{50%{transform:scale(1.35);opacity:.6}}
@@ -125,16 +125,14 @@ details[open]{box-shadow:0 0 20px var(--glow)}summary{cursor:pointer;font-weight
 footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines{font-size:1.8rem;letter-spacing:6px;margin-bottom:8px}
 @media(max-width:700px){h1{font-size:2.3rem}.hero-flake{font-size:2.5rem}.cd-box{min-width:72px}#volRange,#musicLabel{display:none}}
 
+.two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;max-width:1000px;margin:0 auto 30px}
+.two-col .top-box{margin:0;max-width:none}
 /* ===== HOME + SUPPORT ===== */
-.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:0 0 28px}
 .cta-btn{background:rgba(10,28,52,.85);border:2px solid var(--accent);color:#fff;padding:13px 28px;border-radius:6px;font-weight:800;font-size:1rem;letter-spacing:1px;cursor:pointer;transition:.25s}
 .cta-btn.primary{background:linear-gradient(135deg,#1e90ff,#38d4ff);border-color:var(--ice2);box-shadow:0 0 22px var(--glow)}
 .cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 26px var(--glow)}
-.cat-title{color:var(--ice2);font-size:1.6rem;letter-spacing:2px;margin:10px 0 16px}
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:950px;margin:0 auto 34px}
-.cat-card{padding:20px 10px;cursor:pointer;transition:.3s;display:flex;flex-direction:column;gap:4px}
-.cat-card:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--glow)}
-.cat-card .ic{font-size:2.4rem}.cat-card b{color:var(--ice)}.cat-card span{font-size:.85rem;color:#9fc6df}
+.cat-title{display:flex;align-items:center;justify-content:center;gap:16px;color:var(--ice2);font-size:1.5rem;letter-spacing:2px;margin:10px auto 18px;max-width:700px}
+.cat-title::before,.cat-title::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(127,216,255,.55))}.cat-title::after{transform:scaleX(-1)}
 .step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;max-width:950px;margin:0 auto 32px}
 .step{padding:20px 14px}.step .num{width:38px;height:38px;border-radius:6px;background:linear-gradient(135deg,#1e6fb0,#38b6ff);display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 10px;box-shadow:0 0 14px var(--glow)}
 .step b{color:var(--ice);display:block;margin-bottom:4px}.step span{font-size:.9rem;color:#cfe6f7}
@@ -182,20 +180,11 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     <div class="pill click" onclick="copyIP()"><span>🎮 IP:</span><span class="ip-text">wintersmp.xyz</span><span class="ip-copy-hint" id="copyHint">Copiază IP</span></div>
     <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Se verifică serverul...</span></div>
   </div>
-  <div class="cta-row"><button class="cta-btn primary" onclick="showSection('shardsSection')">🛒 Intră în magazin</button><button class="cta-btn" onclick="showSection('supportSection')">🎧 Ai nevoie de ajutor?</button></div>
   <div class="countdown"><div class="ttl">🎄 Până la Crăciun mai sunt</div>
     <div class="cd-row">
       <div class="cd-box"><b id="cdD">--</b><span>zile</span></div><div class="cd-box"><b id="cdH">--</b><span>ore</span></div>
       <div class="cd-box"><b id="cdM">--</b><span>min</span></div><div class="cd-box"><b id="cdS">--</b><span>sec</span></div>
     </div></div>
-  <div class="cat-title">✨ Alege din magazin</div>
-  <div class="cat-grid">
-    <div class="cat-card glass" onclick="showSection('shardsSection')"><div class="ic">💠</div><b>Shards</b><span>de la 0.29 €</span></div>
-    <div class="cat-card glass" onclick="showSection('spawnersSection')"><div class="ic">📦</div><b>Spawner</b><span>de la 0.99 €</span></div>
-    <div class="cat-card glass" onclick="showSection('unbanSection')"><div class="ic">🔓</div><b>Unban</b><span>de la 2.49 €</span></div>
-    <div class="cat-card glass" onclick="showSection('tagsSection')"><div class="ic">🏷️</div><b>Tag-uri</b><span>2 €</span></div>
-    <div class="cat-card glass" onclick="showSection('supportSection')"><div class="ic">🎧</div><b>Support</b><span>Te ajutăm noi</span></div>
-  </div>
   <div class="info-box glass"><h2>Bun venit pe WinterSMP ❄️</h2>
     <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Strângi resurse, îți construiești baza, îți faci o echipă și lupți să devii cel mai puternic jucător.</p>
     <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere, unban-uri și tag-uri</b>. Mulțumim că faci parte din familia WinterSMP! 💙</p></div>
@@ -213,8 +202,10 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     <div class="step glass"><div class="num">4</div><b>Primești produsul</b><span>În câteva minute, în joc.</span></div>
   </div>
   <div class="latest"><div class="lbl">🔥 Ultima cumpărătură</div><div class="who" id="latestWho">-</div><div class="what" id="latestWhat">-</div></div>
+  <div class="two-col">
   <div class="top-box glass"><h2>🏆 Top Cumpărători</h2><div id="topList"></div></div>
   <div class="top-box glass"><h2>🕒 Cumpărături recente</h2><div id="recentList"></div></div>
+  </div>
   <div class="faq"><h2>❓ Întrebări frecvente</h2>
     <details><summary>❄ Când primesc produsele?</summary><p>După confirmarea plății. Dacă nu ai primit nimic în câteva minute, scrie unui admin pe server.</p></details>
     <details><summary>❄ Ce nume scriu la plată?</summary><p>Numele tău exact din Minecraft, cu litere mari și mici ca în joc.</p></details>
@@ -343,7 +334,7 @@ function toast(m){const t=document.getElementById('toast');t.innerText=m;t.class
 /* ===== EFECTE ===== */
 addEventListener('click',e=>{for(let i=0;i<6;i++){const s=document.createElement('span');s.className='sparkle';s.innerText=['❄','✦','✧','❅'][i%4];s.style.left=e.clientX+'px';s.style.top=e.clientY+'px';s.style.setProperty('--dx',(Math.random()*80-40)+'px');s.style.setProperty('--dy',(Math.random()*80-40)+'px');document.body.appendChild(s);setTimeout(()=>s.remove(),900)}});
 setInterval(()=>{const s=document.createElement('i');s.className='shoot';s.style.top=Math.random()*35+'vh';s.style.left=Math.random()*60+'vw';document.body.appendChild(s);setTimeout(()=>s.remove(),1300)},3200);
-setInterval(()=>{const f=document.createElement('span');f.className='floaty';f.textContent=['❄','❅','❆','✨','⛄'][Math.floor(Math.random()*5)];f.style.left=Math.random()*100+'vw';f.style.fontSize=(14+Math.random()*22)+'px';f.style.animationDuration=(9+Math.random()*8)+'s';document.body.appendChild(f);setTimeout(()=>f.remove(),18000)},1400);
+setInterval(()=>{const f=document.createElement('span');f.className='floaty';f.textContent=['❄','❅','❆','✨','⛄'][Math.floor(Math.random()*5)];f.style.left=Math.random()*100+'vw';f.style.fontSize=(14+Math.random()*22)+'px';f.style.animationDuration=(9+Math.random()*8)+'s';document.body.appendChild(f);setTimeout(()=>f.remove(),18000)},3500);
 document.addEventListener('mousemove',e=>{
  const c=e.target.closest&&e.target.closest('.item-card');
  document.querySelectorAll('.item-card').forEach(x=>{if(x!==c)x.style.transform=''});
