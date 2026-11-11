@@ -127,7 +127,7 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
 
 /* ===== UNBAN: cufere pixel-art ===== */
 .pxchest{display:block;image-rendering:pixelated;filter:drop-shadow(0 0 12px var(--rc,var(--accent)))}
-.pxbadge{position:absolute;right:-12px;bottom:-6px;font-size:1.5rem;background:#07121f;border:2px solid var(--rc);border-radius:8px;padding:0 5px;line-height:1.4}
+.pxbadge{position:absolute;right:-16px;bottom:-8px;font-size:2rem;background:#07121f;border:2px solid var(--rc);border-radius:8px;padding:0 5px;line-height:1.4}
 .chest.px{width:84px;height:74px;margin:0 auto 14px}
 </style>
 </head>
@@ -168,7 +168,7 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     </div></div>
   <div class="info-box glass"><h2>Bun venit pe WinterSMP ❄️</h2>
     <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Strângi resurse, îți construiești baza, îți faci o echipă și lupți să devii cel mai puternic jucător.</p>
-    <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere, cufere și tag-uri</b>. Mulțumim că faci parte din familia WinterSMP! 💙</p></div>
+    <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere, unban-uri și tag-uri</b>. Mulțumim că faci parte din familia WinterSMP! 💙</p></div>
   <div class="features">
     <div class="feature glass"><div class="ic">⚔️</div><b>Survival Autentic</b><span>Progres real, fără scurtături.</span></div>
     <div class="feature glass"><div class="ic">🏰</div><b>Comunitate Activă</b><span>Echipe, clanuri și bătălii.</span></div>
@@ -186,7 +186,7 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
 </div>
 
 <div id="ranksSection" class="page-section"><div class="section-title">🛡️ Ranks</div><div class="items-grid"><div class="empty-note">În curând ❄️</div></div></div>
-<div id="keysSection" class="page-section"><div class="section-title">🔑 Keys</div><div class="sec-sub">Deschide cufere și câștigă premii de iarnă ✨</div><div class="items-grid" id="keysGrid"></div></div>
+<div id="keysSection" class="page-section"><div class="section-title">🔑 Keys</div><div class="items-grid"><div class="empty-note">În curând ❄️</div></div></div>
 <div id="shardsSection" class="page-section"><div class="section-title">💠 Pachete de Shards</div><div class="items-grid" id="shardsGrid"></div></div>
 <div id="spawnersSection" class="page-section"><div class="section-title">📦 Spawner</div><div class="sec-sub">Alege spawner-ul care îți trebuie ⛏️</div><div class="items-grid" id="spawnGrid"></div></div>
 <div id="tagsSection" class="page-section"><div class="section-title">🏷️ Tag-uri Exclusive</div>
@@ -233,9 +233,7 @@ const PAYMENT_LINKS={
  "3000 Shards":"https://numele-tau.tebex.io/package/555555","5000 Shards":"https://numele-tau.tebex.io/package/666666",
  "10000 Shards":"https://numele-tau.tebex.io/package/777777","Spawner Gold":"https://numele-tau.tebex.io/package/888888",
  "Tag Personalizat":"https://numele-tau.tebex.io/package/999999",
- "Winter Key":"https://numele-tau.tebex.io/package/k1","Frost Key":"https://numele-tau.tebex.io/package/k2",
- "Aurora Key":"https://numele-tau.tebex.io/package/k3","Legendary Chest":"https://numele-tau.tebex.io/package/k4",
- "Mega Winter Chest":"https://numele-tau.tebex.io/package/k5","Spawner Zombie":"https://numele-tau.tebex.io/package/s1",
+ "Spawner Zombie":"https://numele-tau.tebex.io/package/s1",
  "Spawner Skeleton":"https://numele-tau.tebex.io/package/s2","Spawner Iron Golem":"https://numele-tau.tebex.io/package/s3",
  "Spawner Blaze":"https://numele-tau.tebex.io/package/s4","Spawner Creeper":"https://numele-tau.tebex.io/package/s5",
  "Remove Blacklist":"https://numele-tau.tebex.io/package/u1","Unban Minecraft":"https://numele-tau.tebex.io/package/u2","Unban Discord":"https://numele-tau.tebex.io/package/u3"
@@ -244,15 +242,15 @@ const recentPurchases=[];   // {player,item,time}
 const topBuyers=[];         // {player,total}
 
 const shards=[["100 Shards","Fonduri rapide pentru magazinul din joc.",0.29,"💠","","common"],["500 Shards","Pachet avantajos pentru upgrade-uri.",1.99,"💠","","common"],["750 Shards","Resurse extinse pentru dominație.",2.49,"💎","","rare"],["1500 Shards","Pachetul clasic pentru upgrade-uri mari.",4.99,"💎","","rare"],["3000 Shards","Rezerve masive pentru avansați.",9.99,"🔷","POPULAR","epic"],["5000 Shards","Pachetul suprem pentru supremație.",14.99,"🔷","","epic"],["10000 Shards","Pachetul maxim pentru cei dedicați.",22.49,"👑","BEST VALUE","legend"]];
-const keys=[["Winter Key","Cheia de început: loot de iarnă garantat.","❄ Resurse • Unelte • Shards mici",0.99,"🗝️","common",""],["Frost Key","Chest înghețat cu premii rare.","🧊 Armuri enchantate • Shards • Blocuri rare",1.99,"🔑","rare",""],["Aurora Key","Se deschide sub aurora boreală.","🌌 Spawnere • Tag-uri • Shards mari",3.49,"🧰","epic","POPULAR"],["Legendary Chest","Cufărul legendar al regelui gheții.","👑 Set complet • Spawnere rare • 2000+ Shards",5.99,"🎁","legend",""],["Mega Winter Chest","Cel mai mare cufăr din magazin.","💎 Tot ce e mai bun • Bonus exclusiv",9.99,"🏆","legend","BEST VALUE"]];
-const spawners=[["Spawner Gold","Aur constant pentru farm lung.",1.49,"🪙","rare",""],["Spawner Zombie","Zombi infinit: carne și XP.",0.99,"🧟","common",""],["Spawner Skeleton","Oase și săgeți automat.",0.99,"💀","common",""],["Spawner Iron Golem","Fier la greu, fără efort.",1.99,"🗿","rare",""],["Spawner Blaze","Blaze rods pentru poțiuni.",2.49,"🔥","epic","POPULAR"],["Spawner Creeper","Praf de pușcă pentru războaie.",2.99,"💥","epic",""]];
+function spawnerSVG(c,badge){return `<svg class="pxchest" viewBox="0 0 16 16" width="80" height="80" shape-rendering="crispEdges"><rect width="16" height="16" fill="#14161f"/><rect width="16" height="1" fill="#3a3f55"/><rect y="15" width="16" height="1" fill="#3a3f55"/><rect width="1" height="16" fill="#3a3f55"/><rect x="15" width="1" height="16" fill="#3a3f55"/><rect x="2" y="2" width="12" height="12" fill="#07080d"/><rect x="5" y="5" width="6" height="6" fill="${c}"/><rect x="6" y="7" width="1" height="1" fill="#000"/><rect x="9" y="7" width="1" height="1" fill="#000"/><rect x="7" y="9" width="2" height="1" fill="#000"/><g fill="#6a7194" opacity=".85"><rect x="4" y="2" width="1" height="12"/><rect x="8" y="2" width="1" height="12"/><rect x="11" y="2" width="1" height="12"/><rect x="2" y="4" width="12" height="1"/><rect x="2" y="8" width="12" height="1"/><rect x="2" y="11" width="12" height="1"/></g><rect x="1" y="1" width="2" height="2" fill="#2a2f45"/><rect x="13" y="1" width="2" height="2" fill="#2a2f45"/><rect x="1" y="13" width="2" height="2" fill="#2a2f45"/><rect x="13" y="13" width="2" height="2" fill="#2a2f45"/></svg><span class="pxbadge">${badge}</span>`}
+const spawners=[["Spawner Gold","🪙 Aur constant pentru farm lung.",1.49,spawnerSVG("#ffd76a","🪙"),"rare",""],["Spawner Zombie","🧟 Zombi infinit: carne și XP.",0.99,spawnerSVG("#4a7a3a","🧟"),"common",""],["Spawner Skeleton","💀 Oase și săgeți automat.",0.99,spawnerSVG("#d8d8d8","💀"),"common",""],["Spawner Iron Golem","🗿 Fier la greu, fără efort.",1.99,spawnerSVG("#c9c2b5","🗿"),"rare",""],["Spawner Blaze","🔥 Blaze rods pentru poțiuni.",2.49,spawnerSVG("#ffb300","🔥"),"epic","POPULAR"],["Spawner Creeper","💥 Praf de pușcă pentru războaie.",2.99,spawnerSVG("#4fd34f","💥"),"epic",""]];
 
 /* ===== UNBAN: cufăr pixel-art (SVG) ===== */
 function chestSVG(a,badge){return `<svg class="pxchest" viewBox="0 0 16 14" width="84" height="74" shape-rendering="crispEdges"><rect x="0" y="0" width="16" height="14" fill="#2b1a0a"/><rect x="1" y="1" width="14" height="5" fill="#9b6a34"/><rect x="1" y="6" width="14" height="7" fill="#7a4d22"/><rect x="1" y="5" width="14" height="1" fill="#2b1a0a"/><rect x="3" y="1" width="2" height="12" fill="${a}"/><rect x="11" y="1" width="2" height="12" fill="${a}"/><rect x="7" y="4" width="2" height="4" fill="#d9d9d9"/><rect x="7" y="5" width="2" height="2" fill="#555"/><rect x="2" y="2" width="1" height="1" fill="#c48a4a"/><rect x="13" y="8" width="1" height="1" fill="#5a3818"/></svg><span class="pxbadge">${badge}</span>`}
 const unbans=[
- ["Remove Blacklist","Scoatere completă din blacklist. Acces total înapoi pe server.",9.99,chestSVG("#ffd76a","⛓️"),"legend","BEST"],
- ["Unban Minecraft","Ești banat pe server? Primești unban rapid în joc.",4.99,chestSVG("#c06bff","⛏️"),"epic","POPULAR"],
- ["Unban Discord","Revino pe serverul nostru de Discord.",2.49,chestSVG("#4d8dff","💬"),"rare",""]
+ ["Remove Blacklist","👑 Scoatere completă din blacklist. Acces total înapoi pe server!","⛓️ Blacklist șters • ✅ Acces complet • 🛡️ Al doua șansă",9.99,chestSVG("#ffd76a","⛓️"),"legend","BEST VALUE"],
+ ["Unban Minecraft","⛏️ Ești banat pe server? Revino în joc rapid și continuă aventura!","🔓 Unban rapid • 🎮 Joci din nou • ❄️ Bun venit înapoi",4.99,chestSVG("#c06bff","🔓"),"epic","POPULAR"],
+ ["Unban Discord","💬 Revino pe serverul nostru de Discord alături de comunitate!","🔓 Unban Discord • 💙 Comunitate • 🔔 Anunțuri",2.49,chestSVG("#4d8dff","💬"),"rare",""]
 ];
 
 const RAR={common:["COMMON","rar-common"],rare:["RARE","rar-rare"],epic:["EPIC","rar-epic"],legend:["LEGENDARY","rar-legend"]};
@@ -275,9 +273,8 @@ function toast(m){const t=document.getElementById('toast');t.innerText=m;t.class
  document.getElementById('topList').innerHTML=topBuyers.length?topBuyers.slice(0,5).map((t,i)=>`<div class="top-row"><span>${med[i]}</span><span class="nm">${esc(t.player)}</span><span class="amt">${t.total.toFixed(2)} €</span></div>`).join(""):`<div class="empty-note">Fii primul din top! 🏆</div>`;
  document.getElementById('recentList').innerHTML=recentPurchases.length?recentPurchases.slice(0,5).map(r=>`<div class="recent-item"><span><b>${esc(r.player)}</b> — ${esc(r.item)}</span><span>${esc(r.time)}</span></div>`).join(""):`<div class="empty-note">Nicio cumpărătură recentă.</div>`;
  document.getElementById('shardsGrid').innerHTML=shards.map(s=>card(s[0],s[1],"",s[2],s[3],s[5],s[4])).join("");
- document.getElementById('keysGrid').innerHTML=keys.map(k=>card(k[0],k[1],k[2],k[3],k[4],k[5],k[6])).join("");
- document.getElementById('spawnGrid').innerHTML=spawners.map(s=>card(s[0],s[1],"",s[2],s[3],s[4],s[5])).join("");
- document.getElementById('unbanGrid').innerHTML=unbans.map(u=>card(u[0],u[1],"",u[2],u[3],u[4],u[5])).join("");
+  document.getElementById('spawnGrid').innerHTML=spawners.map(s=>card(s[0],s[1],"",s[2],s[3],s[4],s[5])).join("");
+ document.getElementById('unbanGrid').innerHTML=unbans.map(u=>card(u[0],u[1],u[2],u[3],u[4],u[5],u[6])).join("");
  const st=document.getElementById('stars');
  for(let i=0;i<70;i++){const s=document.createElement('span');s.style.left=Math.random()*100+"%";s.style.top=Math.random()*70+"%";s.style.animationDelay=Math.random()*3+"s";st.appendChild(s)}
 })();
