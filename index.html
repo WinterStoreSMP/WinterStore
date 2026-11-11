@@ -23,16 +23,16 @@ body{background:linear-gradient(180deg,#030814,#0a1e3d 55%,#0d2b52) fixed;color:
 .floaty{position:fixed;top:-40px;z-index:2;pointer-events:none;animation:fall linear forwards;opacity:.8}
 @keyframes fall{to{transform:translateY(112vh) rotate(360deg)}}
 
-.topbar{position:sticky;top:10px;z-index:50;background:rgba(8,20,40,.65);backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(127,216,255,.45);border-radius:22px;box-shadow:0 8px 35px rgba(56,182,255,.25);margin:12px auto 25px;max-width:1150px;padding:10px 18px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.topbar{position:sticky;top:10px;z-index:50;background:rgba(8,20,40,.65);backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(127,216,255,.45);border-radius:8px;box-shadow:0 8px 35px rgba(56,182,255,.25);margin:12px auto 25px;max-width:1150px;padding:10px 18px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
 .logo{font-size:1.35rem;font-weight:800;letter-spacing:3px;color:var(--ice2);margin-right:12px;cursor:pointer;animation:logoGlow 3s ease-in-out infinite alternate}
 @keyframes logoGlow{to{text-shadow:0 0 28px #7fd8ff,0 0 4px #fff}}
-.nav-btn{background:transparent;border:1px solid transparent;color:#d6efff;padding:8px 16px;border-radius:16px;cursor:pointer;font-weight:600;transition:.25s}
+.nav-btn{background:transparent;border:1px solid transparent;color:#d6efff;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;transition:.25s}
 .nav-btn:hover{background:rgba(56,182,255,.18);border-color:rgba(127,216,255,.5);transform:translateY(-2px)}
 .nav-btn.active{background:linear-gradient(135deg,#1e6fb0,#38b6ff);border-color:var(--ice2);box-shadow:0 0 18px var(--glow)}
-.cart-icon-btn{margin-left:8px;background:linear-gradient(135deg,#ffb347,#ffd76a);border:none;color:#3a2400;padding:9px 18px;border-radius:18px;cursor:pointer;font-weight:800;display:flex;align-items:center;gap:8px;box-shadow:0 0 18px rgba(255,215,106,.5);transition:.3s}
+.cart-icon-btn{margin-left:8px;background:linear-gradient(135deg,#ffb347,#ffd76a);border:none;color:#3a2400;padding:9px 18px;border-radius:6px;cursor:pointer;font-weight:800;display:flex;align-items:center;gap:8px;box-shadow:0 0 18px rgba(255,215,106,.5);transition:.3s}
 .cart-icon-btn:hover{transform:scale(1.07)}.cart-icon-btn.bump{animation:bump .5s}
 @keyframes bump{40%{transform:scale(1.25) rotate(-6deg)}}
-.cart-badge{background:#3a2400;color:#ffd76a;padding:1px 8px;border-radius:50%;font-size:.85rem}
+.cart-badge{background:#3a2400;color:#ffd76a;padding:1px 8px;border-radius:4px;font-size:.85rem}
 
 .hero{margin:20px auto 10px;max-width:900px}
 .hero-flake{font-size:4rem;display:inline-block;filter:drop-shadow(0 0 20px var(--accent));animation:floatFlake 3s ease-in-out infinite}.hero-flake.r{animation-delay:1.5s}
@@ -41,9 +41,9 @@ h1{font-size:3.8rem;letter-spacing:6px;display:inline-block;vertical-align:middl
 @keyframes shimmer{to{background-position:250% center}}
 .hero-sub{color:var(--ice2);font-size:1.2rem;margin-top:8px;letter-spacing:2px}
 .pill-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:18px 0 26px}
-.pill{display:inline-flex;align-items:center;gap:10px;background:rgba(10,28,52,.8);border:2px solid var(--accent);padding:11px 24px;border-radius:30px;box-shadow:0 0 16px rgba(56,182,255,.35)}
+.pill{display:inline-flex;align-items:center;gap:10px;background:rgba(10,28,52,.8);border:2px solid var(--accent);padding:11px 24px;border-radius:8px;box-shadow:0 0 16px rgba(56,182,255,.35)}
 .pill.click{cursor:pointer;transition:.3s;animation:pulseBox 2.2s ease-in-out infinite}.pill.click:hover{transform:scale(1.05)}
-.ip-text{font-size:1.25rem;font-weight:bold;color:#00e5ff}.ip-copy-hint{font-size:.85rem;color:#bcd;background:#12324f;padding:4px 12px;border-radius:15px;border:1px solid var(--accent)}
+.ip-text{font-size:1.25rem;font-weight:bold;color:#00e5ff}.ip-copy-hint{font-size:.85rem;color:#bcd;background:#12324f;padding:4px 12px;border-radius:5px;border:1px solid var(--accent)}
 .dot{width:11px;height:11px;border-radius:50%;background:#7a8b99;display:inline-block}
 .dot.on{background:#46ff8b;box-shadow:0 0 12px #46ff8b;animation:blink 1.6s infinite}.dot.off{background:#ff5b5b;box-shadow:0 0 10px #ff5b5b}
 @keyframes blink{50%{opacity:.35}}
@@ -125,6 +125,26 @@ details[open]{box-shadow:0 0 20px var(--glow)}summary{cursor:pointer;font-weight
 footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines{font-size:1.8rem;letter-spacing:6px;margin-bottom:8px}
 @media(max-width:700px){h1{font-size:2.3rem}.hero-flake{font-size:2.5rem}.cd-box{min-width:72px}#volRange,#musicLabel{display:none}}
 
+/* ===== HOME + SUPPORT ===== */
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:0 0 28px}
+.cta-btn{background:rgba(10,28,52,.85);border:2px solid var(--accent);color:#fff;padding:13px 28px;border-radius:6px;font-weight:800;font-size:1rem;letter-spacing:1px;cursor:pointer;transition:.25s}
+.cta-btn.primary{background:linear-gradient(135deg,#1e90ff,#38d4ff);border-color:var(--ice2);box-shadow:0 0 22px var(--glow)}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 26px var(--glow)}
+.cat-title{color:var(--ice2);font-size:1.6rem;letter-spacing:2px;margin:10px 0 16px}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:950px;margin:0 auto 34px}
+.cat-card{padding:20px 10px;cursor:pointer;transition:.3s;display:flex;flex-direction:column;gap:4px}
+.cat-card:hover{transform:translateY(-6px);box-shadow:0 0 30px var(--glow)}
+.cat-card .ic{font-size:2.4rem}.cat-card b{color:var(--ice)}.cat-card span{font-size:.85rem;color:#9fc6df}
+.step-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;max-width:950px;margin:0 auto 32px}
+.step{padding:20px 14px}.step .num{width:38px;height:38px;border-radius:6px;background:linear-gradient(135deg,#1e6fb0,#38b6ff);display:flex;align-items:center;justify-content:center;font-weight:800;margin:0 auto 10px;box-shadow:0 0 14px var(--glow)}
+.step b{color:var(--ice);display:block;margin-bottom:4px}.step span{font-size:.9rem;color:#cfe6f7}
+.support-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;max-width:1000px;margin:0 auto 10px;padding:10px}
+.sup-card{padding:26px 18px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:.3s}
+.sup-card:hover{transform:translateY(-6px);box-shadow:0 0 34px var(--glow)}
+.sup-card .ic{font-size:2.8rem;filter:drop-shadow(0 0 12px var(--accent))}.sup-card b{color:var(--ice);font-size:1.25rem}
+.sup-card p{color:#d4e8f7;line-height:1.6;margin:0 0 8px;font-size:.95rem}
+.info-box ol{padding-left:22px;margin:0}.info-box li{margin-bottom:6px}
+
 /* ===== UNBAN: cufere pixel-art ===== */
 .pxchest{display:block;image-rendering:pixelated;filter:drop-shadow(0 0 12px var(--rc,var(--accent)))}
 .pxbadge{position:absolute;right:-16px;bottom:-8px;font-size:2rem;background:#07121f;border:2px solid var(--rc);border-radius:8px;padding:0 5px;line-height:1.4}
@@ -151,6 +171,7 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
   <button class="nav-btn" data-sec="spawnersSection" onclick="showSection('spawnersSection')">📦 Spawner</button>
   <button class="nav-btn" data-sec="tagsSection" onclick="showSection('tagsSection')">🏷️ Tags</button>
   <button class="nav-btn" data-sec="unbanSection" onclick="showSection('unbanSection')">🔓 Unban</button>
+  <button class="nav-btn" data-sec="supportSection" onclick="showSection('supportSection')">🎧 Support</button>
   <button class="cart-icon-btn" onclick="openCartModal()">🛒 Coș <span class="cart-badge" id="cartCount">0</span></button>
 </div>
 
@@ -161,11 +182,20 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     <div class="pill click" onclick="copyIP()"><span>🎮 IP:</span><span class="ip-text">wintersmp.xyz</span><span class="ip-copy-hint" id="copyHint">Copiază IP</span></div>
     <div class="pill"><span class="dot" id="statusDot"></span><span id="statusText">Se verifică serverul...</span></div>
   </div>
+  <div class="cta-row"><button class="cta-btn primary" onclick="showSection('shardsSection')">🛒 Intră în magazin</button><button class="cta-btn" onclick="showSection('supportSection')">🎧 Ai nevoie de ajutor?</button></div>
   <div class="countdown"><div class="ttl">🎄 Până la Crăciun mai sunt</div>
     <div class="cd-row">
       <div class="cd-box"><b id="cdD">--</b><span>zile</span></div><div class="cd-box"><b id="cdH">--</b><span>ore</span></div>
       <div class="cd-box"><b id="cdM">--</b><span>min</span></div><div class="cd-box"><b id="cdS">--</b><span>sec</span></div>
     </div></div>
+  <div class="cat-title">✨ Alege din magazin</div>
+  <div class="cat-grid">
+    <div class="cat-card glass" onclick="showSection('shardsSection')"><div class="ic">💠</div><b>Shards</b><span>de la 0.29 €</span></div>
+    <div class="cat-card glass" onclick="showSection('spawnersSection')"><div class="ic">📦</div><b>Spawner</b><span>de la 0.99 €</span></div>
+    <div class="cat-card glass" onclick="showSection('unbanSection')"><div class="ic">🔓</div><b>Unban</b><span>de la 2.49 €</span></div>
+    <div class="cat-card glass" onclick="showSection('tagsSection')"><div class="ic">🏷️</div><b>Tag-uri</b><span>2 €</span></div>
+    <div class="cat-card glass" onclick="showSection('supportSection')"><div class="ic">🎧</div><b>Support</b><span>Te ajutăm noi</span></div>
+  </div>
   <div class="info-box glass"><h2>Bun venit pe WinterSMP ❄️</h2>
     <p><b>WinterSMP</b> este un server de <b>supraviețuire</b> unde iarna nu iartă pe nimeni. Strângi resurse, îți construiești baza, îți faci o echipă și lupți să devii cel mai puternic jucător.</p>
     <p>Prin achizițiile din magazin ne ajuți să menținem serverul rapid și stabil, iar tu primești <b>shards, spawnere, unban-uri și tag-uri</b>. Mulțumim că faci parte din familia WinterSMP! 💙</p></div>
@@ -174,6 +204,13 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     <div class="feature glass"><div class="ic">🏰</div><b>Comunitate Activă</b><span>Echipe, clanuri și bătălii.</span></div>
     <div class="feature glass"><div class="ic">🎁</div><b>Evenimente</b><span>Premii și surprize în fiecare sezon.</span></div>
     <div class="feature glass"><div class="ic">⚡</div><b>Server Stabil</b><span>Performanță bună și suport rapid.</span></div>
+  </div>
+  <div class="cat-title">🧭 Cum cumperi</div>
+  <div class="step-grid">
+    <div class="step glass"><div class="num">1</div><b>Alege produsul</b><span>Din shards, spawnere, unban sau tag-uri.</span></div>
+    <div class="step glass"><div class="num">2</div><b>Scrie numele tău</b><span>Exact cum e în Minecraft.</span></div>
+    <div class="step glass"><div class="num">3</div><b>Plătești</b><span>Rapid, cu paysafecard.</span></div>
+    <div class="step glass"><div class="num">4</div><b>Primești produsul</b><span>În câteva minute, în joc.</span></div>
   </div>
   <div class="latest"><div class="lbl">🔥 Ultima cumpărătură</div><div class="who" id="latestWho">-</div><div class="what" id="latestWhat">-</div></div>
   <div class="top-box glass"><h2>🏆 Top Cumpărători</h2><div id="topList"></div></div>
@@ -198,6 +235,20 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
     <div class="btn-container"><button class="buy-btn" onclick="openCheckoutTag(2)">Cumpără</button><button class="cart-add-btn" onclick="addTagToCart(2)">+ Coș</button></div>
   </div></div></div>
 <div id="unbanSection" class="page-section"><div class="section-title">🔓 Unban</div><div class="sec-sub">Revino în joc sau pe Discord ⚡</div><div class="items-grid" id="unbanGrid"></div></div>
+
+<div id="supportSection" class="page-section"><div class="section-title">🎧 Support</div><div class="sec-sub">Suntem aici să te ajutăm ❄️</div>
+  <div class="support-grid">
+    <div class="sup-card glass"><div class="ic">💬</div><b>Discord</b><p>Cel mai rapid mod de a ne găsi. Deschide un ticket și îți răspundem cât putem de repede.</p><button class="cta-btn primary" onclick="openDiscord()">Deschide Discord</button></div>
+    <div class="sup-card glass"><div class="ic">🎮</div><b>Pe server</b><p>Scrie unui admin sau moderator online pe <b>wintersmp.xyz</b>.</p><button class="cta-btn" onclick="copyIP();toast('📋 IP copiat!')">Copiază IP</button></div>
+    <div class="sup-card glass"><div class="ic">🧾</div><b>Probleme cu plata</b><p>Nu ai primit produsul? Trimite-ne datele de mai jos și rezolvăm cât mai repede.</p></div>
+  </div>
+  <div class="info-box glass"><h2>📝 Ce să scrii când ceri ajutor</h2>
+    <ol><li>Numele tău exact din <b>Minecraft</b>.</li><li>Produsul pe care l-ai cumpărat.</li><li>Data și ora plății.</li><li>ID-ul tranzacției sau o poză cu dovada plății.</li></ol></div>
+  <div class="faq"><h2>❓ Întrebări de support</h2>
+    <details><summary>❄ Nu am primit produsul, ce fac?</summary><p>Mai așteaptă câteva minute după plată. Dacă tot nu apare, scrie-ne pe Discord cu datele de mai sus.</p></details>
+    <details><summary>❄ Am scris greșit numele de Minecraft</summary><p>Spune-ne imediat pe Discord și îți verificăm comanda.</p></details>
+    <details><summary>❄ Cum cer un unban?</summary><p>Cumpără produsul potrivit din secțiunea Unban, apoi deschide un ticket pe Discord cu numele tău.</p></details>
+  </div></div>
 
 <div id="checkoutModal" class="modal-overlay"><div class="modal-content">
   <button class="modal-close" onclick="closeCheckout()">&times;</button>
@@ -227,6 +278,8 @@ footer{margin-top:60px;padding:30px 0 120px;color:#7da0bb;font-size:.9rem}.pines
 
 <script>
 const SERVER_IP="wintersmp.xyz";
+const DISCORD_URL="https://discord.gg/LINK-TAU"; // pune aici invitația ta de Discord
+function openDiscord(){if(DISCORD_URL.includes("LINK-TAU")){toast("Link-ul de Discord nu e setat încă.");return}window.open(DISCORD_URL,"_blank")}
 const PAYMENT_LINKS={
  "100 Shards":"https://numele-tau.tebex.io/package/111111","500 Shards":"https://numele-tau.tebex.io/package/222222",
  "750 Shards":"https://numele-tau.tebex.io/package/333333","1500 Shards":"https://numele-tau.tebex.io/package/444444",
